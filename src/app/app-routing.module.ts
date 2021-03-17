@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'customer',
     loadChildren: () => import('./order/customer/customer.module').then( m => m.CustomerPageModule)
   },
+
+
+
+
 ];
 
 @NgModule({
