@@ -1,8 +1,10 @@
 <ion-card>
-  <ion-card-header>
-    <ion-card-subtitle>總金額</ion-card-subtitle>
-    <ion-card-title color="primary">
-      {{totalPrice | currency : 'NTD' : 'code' : '1.0-0'}}
-    </ion-card-title>
-  </ion-card-header>
+  <ion-card-content>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">總金額</ion-card-title>
+      <ion-card-title class="ion-text-center" color="primary">
+        {{totalPrice | currency : 'NTD' : '' : '1.0-0'}}
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card-content>
 </ion-card>

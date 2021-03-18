@@ -48,14 +48,11 @@ export class ProductItemComponent implements OnInit {
     this.posService.setProduct(this.product);
   }
   minusAmount() {
-    if (this.product.amount > 1) {
+    if (this.product.amount - 1 === 0) {
+      this.onDelete();
+    } else {
       this.product.amount--;
       this.posService.setProduct(this.product);
     }
   }
-  // onDelete() {
-  //   const result = this.presentAlert();
-
-  //   console.log('result', result);
-  // }
 }

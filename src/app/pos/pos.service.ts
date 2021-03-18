@@ -8,7 +8,7 @@ export class PosService {
   products = [
     new Product(
       '1',
-      '1000xm4',
+      'Noble Audio Sultan / Limited Edition on Damascus / 24K GOLD / 4.4mm',
       2,
       2000
     ),
