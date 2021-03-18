@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: '請選擇付款方式',
       cssClass: 'primary',
-      buttons: [ {
+      buttons: [{
         text: '現金',
         icon: 'cash',
         handler: () => {
@@ -40,7 +40,67 @@ export class PaymentComponent implements OnInit {
           this.methodIocn = 'card';
 
         }
+      }
+
+        , {
+        text: 'LINE PAY',
+        icon: 'qr-code',
+        handler: () => {
+          console.log('Favorite clicked');
+          this.methodIsSelected = true;
+          this.methodName = 'LINE PAY';
+          this.methodColor = 'tertiary';
+          this.methodIocn = 'qr-code';
+
+        }
       }, {
+        text: '街口',
+        icon: 'qr-code',
+        handler: () => {
+          console.log('Favorite clicked');
+          this.methodIsSelected = true;
+          this.methodName = '街口';
+          this.methodColor = 'tertiary';
+          this.methodIocn = 'qr-code';
+
+        }
+      }, {
+        text: '匯款',
+        icon: 'calculator',
+        handler: () => {
+          console.log('Favorite clicked');
+          this.methodIsSelected = true;
+          this.methodName = '匯款';
+          this.methodColor = 'tertiary';
+          this.methodIocn = 'card';
+
+        }
+      }
+      , {
+        text: '蝦皮',
+        icon: 'storefront',
+        handler: () => {
+          console.log('Favorite clicked');
+          this.methodIsSelected = true;
+          this.methodName = '蝦皮';
+          this.methodColor = 'tertiary';
+          this.methodIocn = 'storefront';
+
+        }
+      }
+      , {
+        text: '露天',
+        icon: 'storefront',
+        handler: () => {
+          console.log('Favorite clicked');
+          this.methodIsSelected = true;
+          this.methodName = '露天';
+          this.methodColor = 'tertiary';
+          this.methodIocn = 'storefront';
+
+        }
+      }
+        , {
         text: '取消',
         icon: 'close',
         role: 'cancel',
