@@ -1,3 +1,4 @@
+import { PosService } from './../pos.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PriceComponent implements OnInit {
 
-  constructor() { }
+  totalPrice: number;
+  constructor(private posService: PosService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.totalPrice = this.posService.getTotalPrice();
+  }
 
 }

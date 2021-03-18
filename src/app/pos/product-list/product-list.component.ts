@@ -1,31 +1,18 @@
 import { Product } from './../product.model';
 import { Component, OnInit } from '@angular/core';
-
+import { PosService } from '../pos.service';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  products = [
-    new Product(
-      '1000xm4',
-      2,
-      2000
-    ),
-    new Product(
-      '1000xm4',
-      2,
-      2000
-    ), new Product(
-      '1000xm4',
-      2,
-      2000
-    ),
-  ];
-  constructor() { }
+  products: Product[];
+  constructor(private posService: PosService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.products = this.posService.getProductList();
+  }
 
 
 
