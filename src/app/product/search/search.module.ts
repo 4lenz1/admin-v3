@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { SearchPageRoutingModule } from './search-routing.module';
 
 import { SearchPage } from './search.page';
+import { HeaderModule } from '../../layout/header/header.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SearchPageRoutingModule
+    SearchPageRoutingModule,
+    HeaderModule
   ],
   declarations: [SearchPage]
 })
-export class SearchPageModule {}
+export class SearchPageModule { }
