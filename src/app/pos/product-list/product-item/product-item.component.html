@@ -8,14 +8,14 @@
       </ion-col>
       <ion-col size="2">
         <ion-label>
-          <ion-icon name="remove-circle-outline"></ion-icon>
+          <ion-icon size="large" (click)="minusAmount()" name="remove-circle-outline"></ion-icon>
           {{product.amount}}
-          <ion-icon name="add-circle"></ion-icon>
+          <ion-icon size="large" (click)="addAmount()" name="add-circle"></ion-icon>
 
         </ion-label>
       </ion-col>
       <ion-col size="2">
-        <ion-label>
+        <ion-label size="large">
           {{product.unitPrice  | currency : 'NTD': ' ' : '1.0-0'}}
         </ion-label>
       </ion-col>
@@ -26,7 +26,7 @@
       </ion-col>
       <ion-col size="1">
         <ion-label>
-          <ion-icon name="settings-outline"></ion-icon>
+          <ion-icon name="close-circle-outline" (click)="onDelete()"></ion-icon>
         </ion-label>
       </ion-col>
     </ion-row>

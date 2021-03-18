@@ -13,6 +13,9 @@ export class PriceComponent implements OnInit {
 
   ngOnInit() {
     this.totalPrice = this.posService.getTotalPrice();
+    this.posService.totalPricechanged.subscribe(result => {
+      this.totalPrice = result;
+    });
   }
 
 }
