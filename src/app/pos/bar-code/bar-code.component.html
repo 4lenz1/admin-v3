@@ -1,0 +1,21 @@
+<ion-card>
+  <ion-card-content>
+    <ion-item class="ion-padding">
+      <ion-button (click)="onCamScanning()" color="clear">
+        <ion-icon size="large" color="{{camIconColor}}" name="scan-circle"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onBarcodeScanning()" color="clear">
+        <ion-icon size="large" color="{{barcodeIconColor}}" name="barcode"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onSearch($event)" color="clear">
+        <ion-icon size="large" color="warning" name="search-circle"></ion-icon>
+      </ion-button>
+
+      <ion-input (change)="onSearch($event.target.value)" #inputBarcode *ngIf="barCodeScanning" placeholder="掃描條碼" inputmode="decimal" clearInput="true"
+        clearOnEdit="true">
+      </ion-input>
+    </ion-item>
+    <zxing-scanner [formats]="scanAllowedFormats" (scanSuccess)="onCodeResult($event)" *ngIf="camScanning">
+    </zxing-scanner>
+  </ion-card-content>
+</ion-card>

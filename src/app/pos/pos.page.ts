@@ -16,4 +16,5 @@ export class PosPage implements OnInit {
     // this.headerService.setHeaderTitle('PoS');
   }
 
+ 
 }

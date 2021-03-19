@@ -1,3 +1,4 @@
+import { NodeWithI18n } from '@angular/compiler';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Product } from './product.model';
 
@@ -59,6 +60,19 @@ export class PosService {
     this.products = this.products.filter(result =>
       result.id !== id);
 
+    this.totalPricechanged.emit(this.getTotalPrice());
+    this.ProdcutsChanged.emit(this.products);
+  }
+
+  //get product info by barcode
+  getProductByBarCode(value: string) {
+    //   for test now
+    this.products.unshift(new Product(
+      (Math.random() * +value).toFixed(0).toString(),
+      'TEST Product',
+      1,
+      3000
+    ));
     this.totalPricechanged.emit(this.getTotalPrice());
     this.ProdcutsChanged.emit(this.products);
   }

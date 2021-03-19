@@ -14,6 +14,8 @@ import { PriceComponent } from './price/price.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
+import { BarCodeComponent } from './bar-code/bar-code.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,12 +24,15 @@ import { ProductItemComponent } from './product-list/product-item/product-item.c
     PosPageRoutingModule,
     HeaderModule,
     RightSidebarModule,
-
+    ZXingScannerModule
   ],
+  providers: [ZXingScannerModule],
   declarations: [PosPage, ProductListComponent,
     PriceComponent,
     PaymentComponent,
     CheckoutComponent,
+    BarCodeComponent,
     ProductItemComponent]
+
 })
 export class PosPageModule { }
