@@ -1,0 +1,12 @@
+<app-side-card>
+  <ng-container cardTitle>
+    發票
+  </ng-container>
+  <ng-container cardContent>
+    <ion-button expand="block" size="large" color="{{color}}" (click)="onCarrierSelect($event)">
+      <ion-icon name="{{icon}}"></ion-icon>
+      <h2 class="ion-text-center ion-padding">{{type}}</h2>
+    </ion-button>
+  </ng-container>
+  
+</app-side-card>

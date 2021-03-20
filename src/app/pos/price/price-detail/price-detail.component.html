@@ -1,0 +1,29 @@
+<div class="ion-page">
+
+  <ion-list>
+    <ion-list-header class="">
+      <ion-label class="ion-text-center">價格設定</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>折扣</ion-label>
+      <ion-input id="discountPrice" value="number" type="number" (keyup)="onPriceChange($event.target.offsetParent.id)"
+        [(ngModel)]="discountPrice" placeholder="50, 100 , 200 ...">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>折數</ion-label>
+      <ion-input id="discountRate" value="number" type="number" (keyup)="onPriceChange($event.target.offsetParent.id)"
+        [(ngModel)]="discountRate" placeholder="1~10"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>優惠價</ion-label>
+      <ion-input id="totalPrice" value="number" type="number" (keyup)="onPriceChange($event.target.offsetParent.id)"
+        [(ngModel)]="totalPrice" placeholder="優惠總價">
+      </ion-input>
+    </ion-item>
+    <ion-button (click)="onDiscountOk()" expand="block" >
+      OK
+    </ion-button>
+  </ion-list>
+
+</div>

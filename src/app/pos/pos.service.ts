@@ -30,13 +30,16 @@ export class PosService {
   totalPrice = 0;
   constructor() { }
 
-  getTotalPrice() {
+  getOriginalTotalPrice() {
     this.totalPrice = 0;
     this.products.forEach(x => {
       this.totalPrice += x.amount * x.unitPrice;
     });
     // console.log('total price', this.totalPrice)
     return this.totalPrice;
+  }
+  setTotalPrice(value: number) {
+    this.totalPrice = value;
   }
 
   getProductList() {
@@ -53,14 +56,14 @@ export class PosService {
     });
     this.products = newProducts;
 
-    this.totalPricechanged.emit(this.getTotalPrice());
+    this.totalPricechanged.emit(this.getOriginalTotalPrice());
   }
 
   deleteProduct(id: string) {
     this.products = this.products.filter(result =>
       result.id !== id);
 
-    this.totalPricechanged.emit(this.getTotalPrice());
+    this.totalPricechanged.emit(this.getOriginalTotalPrice());
     this.ProdcutsChanged.emit(this.products);
   }
 
@@ -73,7 +76,7 @@ export class PosService {
       1,
       3000
     ));
-    this.totalPricechanged.emit(this.getTotalPrice());
+    this.totalPricechanged.emit(this.getOriginalTotalPrice());
     this.ProdcutsChanged.emit(this.products);
   }
 

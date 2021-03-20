@@ -9,7 +9,7 @@ import { ActionSheetController } from '@ionic/angular';
 export class PaymentComponent implements OnInit {
   methodIsSelected = false;
   methodName = '選擇付款方式';
-  methodColor = '';
+  methodColor = 'danger';
   methodIocn = 'apps';
   constructor(public actionSheetController: ActionSheetController) { }
 
@@ -108,7 +108,7 @@ export class PaymentComponent implements OnInit {
           console.log('Cancel clicked');
           this.methodIsSelected = false;
           this.methodName = '選擇付款方式';
-          this.methodColor = 'primary';
+          this.methodColor = 'danger';
           this.methodIocn = 'apps';
 
         }

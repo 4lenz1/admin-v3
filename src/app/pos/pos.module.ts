@@ -16,6 +16,13 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
 import { BarCodeComponent } from './bar-code/bar-code.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { SideCardComponent } from './UI/side-card/side-card.component';
+import { TaxComponent } from './tax/tax.component';
+import { CarrierComponent } from './carrier/carrier.component';
+import { PopoverListComponent } from './popover-list/popover-list.component';
+import { PopoverItemComponent } from './popover-list/popover-item/popover-item.component';
+import { PriceDetailComponent } from "./price/price-detail/price-detail.component";
+
 @NgModule({
   imports: [
     CommonModule,
@@ -27,12 +34,19 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     ZXingScannerModule
   ],
   providers: [ZXingScannerModule],
+  entryComponents: [PopoverListComponent],
   declarations: [PosPage, ProductListComponent,
     PriceComponent,
     PaymentComponent,
     CheckoutComponent,
     BarCodeComponent,
-    ProductItemComponent]
+    ProductItemComponent,
+    SideCardComponent,
+    TaxComponent,
+    CarrierComponent,
+    PriceDetailComponent,
+    PopoverItemComponent,
+    PopoverListComponent]
 
 })
 export class PosPageModule { }

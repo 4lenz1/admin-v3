@@ -1,10 +1,20 @@
-<ion-card>
-  <ion-card-content>
-    <ion-card-header>
-      <ion-card-title class="ion-text-center">總金額</ion-card-title>
-      <ion-card-title class="ion-text-center" color="primary">
+<app-side-card>
+  <ng-container cardTitle>
+    <ion-button (click)="onResetClick()" expand="block" fill="clear">
+      <ion-card-title class="ion-text-center">
+        總金額
+      </ion-card-title>
+      <ion-icon *ngIf="isDiscounted" class="ion-padding-start" size="large" color="warning" name="reload-outline">
+      </ion-icon>
+    </ion-button>
+
+  </ng-container>
+  <ng-container cardContent>
+    <ion-button fill="clear" expand="block" (click)="onPriceClick()">
+      <ion-card-title class="ion-text-center" color="{{color}}">
         {{totalPrice | currency : 'NTD' : '' : '1.0-0'}}
       </ion-card-title>
-    </ion-card-header>
-  </ion-card-content>
-</ion-card>
+      <ion-icon class="ion-padding-start" size="large" name="settings-outline"></ion-icon>
+    </ion-button>
+  </ng-container>
+</app-side-card>
