@@ -1,4 +1,4 @@
-import { NodeWithI18n } from '@angular/compiler';
+
 import { EventEmitter, Injectable } from '@angular/core';
 import { Product } from './product.model';
 
@@ -28,6 +28,12 @@ export class PosService {
   totalPricechanged = new EventEmitter<number>();
   ProdcutsChanged = new EventEmitter<Product[]>();
   totalPrice = 0;
+  isTaxSelected = false;
+  isRecipeSelected = false;
+  isPayMethodSelected = false;
+  canCheckout = false;
+  checkoutValidateChanged = new EventEmitter<boolean>();
+
   constructor() { }
 
   getOriginalTotalPrice() {

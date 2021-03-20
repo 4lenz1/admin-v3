@@ -1,3 +1,14 @@
-<p>
-  checkout works!
-</p>
+<app-side-card>
+  <!-- <ng-container cardTitle></ng-container> -->
+  <ng-container cardContent>
+    <ion-button 
+    [disabled]="isDisabled" 
+    (click)="onCheckout()" 
+    expand="block" 
+    [color]="color" 
+    size="large"
+    >
+    <ion-icon name="bag-check-outline"></ion-icon>
+    </ion-button>
+  </ng-container>
+</app-side-card>
