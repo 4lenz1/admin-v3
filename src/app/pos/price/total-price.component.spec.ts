@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PriceComponent } from './price.component';
+import { TotalPriceComponent } from './total-price.component';
 
 describe('PriceComponent', () => {
-  let component: PriceComponent;
-  let fixture: ComponentFixture<PriceComponent>;
+  let component: TotalPriceComponent;
+  let fixture: ComponentFixture<TotalPriceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PriceComponent ],
+      declarations: [ TotalPriceComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PriceComponent);
+    fixture = TestBed.createComponent(TotalPriceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

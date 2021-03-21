@@ -10,7 +10,7 @@ import { PosPage } from './pos.page';
 import { HeaderModule } from '../layout/header/header.module';
 import { RightSidebarModule } from '../layout/right-sidebar/right-sidebar.module';
 import { ProductListComponent } from './product-list/product-list.component';
-import { PriceComponent } from './price/price.component';
+import { TotalPriceComponent } from './price/total-price.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProductItemComponent } from './product-list/product-item/product-item.component';
@@ -21,8 +21,8 @@ import { TaxComponent } from './tax/tax.component';
 import { CarrierComponent } from './carrier/carrier.component';
 import { PopoverListComponent } from './popover-list/popover-list.component';
 import { PopoverItemComponent } from './popover-list/popover-item/popover-item.component';
-import { PriceDetailComponent } from "./price/price-detail/price-detail.component";
-import { InputModalComponent } from "./UI/input-modal/input-modal.component";
+import { PriceDetailComponent } from './price/price-detail/price-detail.component';
+import { InputModalComponent } from './UI/input-modal/input-modal.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -36,7 +36,7 @@ import { InputModalComponent } from "./UI/input-modal/input-modal.component";
   providers: [ZXingScannerModule],
   entryComponents: [PopoverListComponent],
   declarations: [PosPage, ProductListComponent,
-    PriceComponent,
+    TotalPriceComponent,
     PaymentComponent,
     CheckoutComponent,
     BarCodeComponent,

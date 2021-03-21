@@ -1,14 +1,14 @@
 import { PriceDetailComponent } from './price-detail/price-detail.component';
-import { PosService } from './../pos.service';
+import { PosService } from '../pos.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-price',
-  templateUrl: './price.component.html',
-  styleUrls: ['./price.component.scss'],
+  selector: 'app-total-price',
+  templateUrl: './total-price.component.html',
+  styleUrls: ['./total-price.component.scss'],
 })
-export class PriceComponent implements OnInit {
+export class TotalPriceComponent implements OnInit {
 
   totalPrice: number;
   isDiscounted = false;
@@ -60,7 +60,6 @@ export class PriceComponent implements OnInit {
       this.color = 'primary';
       this.isDiscounted = false;
       this.totalPrice = this.posService.getOriginalTotalPrice();
-
 
     }
   }
