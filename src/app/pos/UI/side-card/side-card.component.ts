@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-side-card',
@@ -6,9 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-card.component.scss'],
 })
 export class SideCardComponent implements OnInit {
-
+  @Input() show;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  
+  }
 
 }

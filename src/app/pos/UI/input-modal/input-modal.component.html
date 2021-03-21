@@ -1,0 +1,11 @@
+<div class="ion-padding">
+  <ion-input [type]="type" (keyup)="onInput()" [(ngModel)]="inputValue" placeholder="{{placeHolder}}"></ion-input>
+
+  <ion-button [color]="color" [disabled]="isDisabled" (click)="onOkClick()" expand="block">
+    確認
+  </ion-button>
+
+  <ion-button (click)="onCancelClick()" expand="block">
+    還是不要好惹
+  </ion-button>
+</div>

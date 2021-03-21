@@ -1,4 +1,3 @@
-
 import { EventEmitter, Injectable } from '@angular/core';
 import { Product } from './product.model';
 
@@ -6,7 +5,7 @@ import { Product } from './product.model';
   providedIn: 'root'
 })
 export class PosService {
-  products = [
+  private products = [
     new Product(
       '1',
       'Noble Audio Sultan / Limited Edition on Damascus / 24K GOLD / 4.4mm',
@@ -27,14 +26,32 @@ export class PosService {
   ];
   totalPricechanged = new EventEmitter<number>();
   ProdcutsChanged = new EventEmitter<Product[]>();
-  totalPrice = 0;
-  isTaxSelected = false;
-  isRecipeSelected = false;
-  isPayMethodSelected = false;
-  canCheckout = false;
+  private totalPrice = 0;
+  private isTaxSelected = false;
+  // isRecipeSelected = false;
+  private isPayMethodSelected = false;
+  // private canCheckout = false;
   checkoutValidateChanged = new EventEmitter<boolean>();
 
   constructor() { }
+
+  setTaxSelected(value: boolean) {
+    this.isTaxSelected = value;
+    this.setCanCheckOut();
+  }
+  setPayMethodSelected(value: boolean) {
+    this.isPayMethodSelected = value;
+    this.setCanCheckOut();
+  }
+  setCanCheckOut() {
+    if (this.isTaxSelected && this.isPayMethodSelected) {
+      this.checkoutValidateChanged.emit(true);
+    } else {
+      this.checkoutValidateChanged.emit(false);
+    }
+  }
+
+
 
   getOriginalTotalPrice() {
     this.totalPrice = 0;

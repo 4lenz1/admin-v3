@@ -13,7 +13,10 @@ export class PriceComponent implements OnInit {
   totalPrice: number;
   isDiscounted = false;
   discountTotalPrice: number;
-
+  show = {
+    showCardTitle: true,
+    showCardContent: true
+  };
   constructor(private posService: PosService, private modalController: ModalController) { }
   color = 'primary';
   ngOnInit() {

@@ -1,7 +1,9 @@
+import { PosService } from './../pos.service';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { Popover } from '../popover-list/popover-models';
 import { PopoverListComponent } from '../popover-list/popover-list.component';
+import { InputModalComponent } from '../UI/input-modal/input-modal.component';
 
 @Component({
   selector: 'app-tax',
@@ -10,14 +12,21 @@ import { PopoverListComponent } from '../popover-list/popover-list.component';
 })
 export class TaxComponent implements OnInit {
 
-
+  show = {
+    showCardTitle: true,
+    showCardContent: true
+  };
   icon = 'help-circle';
   tax = '未確認';
   color = 'danger';
   taxIsSelected = false;
   choice = [new Popover('no', '不開'), new Popover('yes', '開立統編')];
+  enteredTaxNumber: string;
 
-  constructor(public popoverController: PopoverController) { }
+
+  constructor(public popoverController: PopoverController
+    , private posService: PosService
+    , private modalController: ModalController) { }
 
   ngOnInit() { }
 
@@ -33,58 +42,50 @@ export class TaxComponent implements OnInit {
     popover.onWillDismiss()
       .then((result) => {
         if (!result.data) {
-          // do nothing 
+          // do nothing
           return;
         }
         else if (result.data.id === 'yes') {
-          this.taxIsSelected = true;
-          this.color = 'warning';
-          this.tax = '開立統編';
-          this.icon = 'checkmark-outline';
+          this.onTaxOptionClick();
         } else {
           this.taxIsSelected = true;
           this.color = 'primary';
           this.tax = '不開統編';
           this.icon = 'close';
+          // this.showTaxNumber = false;
+          this.enteredTaxNumber = '';
+          this.posService.setTaxSelected(true);
         }
       });
     return await popover.present();
   }
 
+  async onTaxOptionClick() {
+    const modal = await this.modalController.create({
+      component: InputModalComponent,
+      componentProps: {
+        placeHolder: '輸入統編',
+        type: 'number',
+        minLength: 8,
+        maxLength: 8
+      },
+      backdropDismiss: false
+      // cssClass: 'my-custom-class'
+    });
 
-  // async aonTaxSelect() {
-  //   const actionSheet = await this.actionSheetController.create({
-  //     header: '要開統編嗎ㄇㄇㄇ?',
-  //     cssClass: 'primary',
-  //     buttons: [{
-  //       text: '好哇',
-  //       icon: 'checkmark-outline',
-  //       handler: () => {
-  //         this.taxIsSelected = true;
-  //         this.color = 'warning';
-  //         this.tax = '開立統編';
-  //         this.icon = 'checkmark-outline';
-  //       }
-  //     }, {
-  //       text: '鼻要',
-  //       icon: 'close',
-  //       handler: () => {
-  //         this.taxIsSelected = true;
-  //         this.color = 'primary';
-  //         this.tax = '不開統編';
-  //         this.icon = 'close';
-  //       }
-  //     }, {
-  //       text: '取消',
-  //       role: 'cancel',
-  //       handler: () => {
-  //         this.taxIsSelected = false;
-  //         this.color = 'danger';
-  //         this.icon = 'help-circle';
+    modal.onWillDismiss().then(result => {
+      console.log(result.data);
+      if (result.data) {
 
-  //       }
-  //     }]
-  //   });
-  //   await actionSheet.present();
-  // }
+        this.enteredTaxNumber = result.data;
+        this.taxIsSelected = true;
+        this.color = 'warning';
+        this.tax = this.enteredTaxNumber;
+        this.icon = 'checkmark-outline';
+        this.posService.setTaxSelected(true);
+      }
+
+    });
+    return await modal.present();
+  }
 }

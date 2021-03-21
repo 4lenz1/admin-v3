@@ -1,9 +1,10 @@
-<app-side-card>
+<app-side-card [show]="show">
   <ng-container cardTitle>統編</ng-container>
   <ng-container cardContent>
     <ion-button expand="block" size="large" color="{{color}}" (click)="onTaxSelect($event)">
       <ion-icon name="{{icon}}"></ion-icon>
       <h2 class="ion-text-center ion-padding">{{tax}}</h2>
     </ion-button>
+    <!-- <ion-title class="ion-text-center" *ngIf="showTaxNumber">{{enteredTaxNumber}}</ion-title> -->
   </ng-container>
 </app-side-card>

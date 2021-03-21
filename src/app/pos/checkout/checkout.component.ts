@@ -1,5 +1,6 @@
 import { PosService } from './../pos.service';
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-checkout',
@@ -10,9 +11,14 @@ export class CheckoutComponent implements OnInit {
 
   isDisabled = true;
   color = 'medium';
-  constructor(private posService: PosService) {
+  show = {
+    showCardTitle: false,
+    showCardContent: true
+  };
+
+  constructor(private posService: PosService , public loadingController: LoadingController) {
     this.posService.checkoutValidateChanged.subscribe(result => {
-      this.isDisabled = result;
+      this.isDisabled = !result;
       if (this.isDisabled) {
         this.color = 'medium';
       } else {
@@ -23,6 +29,20 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() { }
   onCheckout() {
+this.presentLoading();
+  }
 
+
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: '處理中.....',
+      duration: 3000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 }

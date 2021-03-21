@@ -22,7 +22,7 @@ import { CarrierComponent } from './carrier/carrier.component';
 import { PopoverListComponent } from './popover-list/popover-list.component';
 import { PopoverItemComponent } from './popover-list/popover-item/popover-item.component';
 import { PriceDetailComponent } from "./price/price-detail/price-detail.component";
-
+import { InputModalComponent } from "./UI/input-modal/input-modal.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -46,7 +46,9 @@ import { PriceDetailComponent } from "./price/price-detail/price-detail.componen
     CarrierComponent,
     PriceDetailComponent,
     PopoverItemComponent,
-    PopoverListComponent]
+    PopoverListComponent,
+    InputModalComponent
+  ]
 
 })
 export class PosPageModule { }
