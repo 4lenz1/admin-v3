@@ -13,11 +13,20 @@ export class PaymentComponent implements OnInit {
   methodName = '選擇付款方式';
   methodColor = 'danger';
   methodIocn = 'apps';
+  showCalculator = false;
+  paidMoney: number;
+  totalPrice: number;
   constructor(public actionSheetController: ActionSheetController
-    , private posService: PosService
-    , private modalController: ModalController) { }
+    ,         private posService: PosService
+    ,         private modalController: ModalController) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.totalPrice = this.posService.getOriginalTotalPrice();
+    this.posService.totalPricechanged.subscribe(result => {
+      this.totalPrice = result;
+      console.log(this.totalPrice);
+    });
+  }
 
   async onMethodSelect() {
     const actionSheet = await this.actionSheetController.create({
@@ -43,8 +52,10 @@ export class PaymentComponent implements OnInit {
           this.methodName = '刷卡';
           this.methodColor = 'tertiary';
           this.methodIocn = 'card';
+          this.posService.setPaidMoney(this.totalPrice);
           this.posService.setPayMethodSelected(true);
 
+          this.showCalculator = false;
         }
       }
 
@@ -57,7 +68,10 @@ export class PaymentComponent implements OnInit {
           this.methodName = 'LINE PAY';
           this.methodColor = 'tertiary';
           this.methodIocn = 'qr-code';
+          this.posService.setPaidMoney(this.totalPrice);
           this.posService.setPayMethodSelected(true);
+
+          this.showCalculator = false;
 
         }
       }, {
@@ -69,7 +83,10 @@ export class PaymentComponent implements OnInit {
           this.methodName = '街口';
           this.methodColor = 'tertiary';
           this.methodIocn = 'qr-code';
+          this.posService.setPaidMoney(this.totalPrice);
           this.posService.setPayMethodSelected(true);
+
+          this.showCalculator = false;
 
         }
       }, {
@@ -81,7 +98,10 @@ export class PaymentComponent implements OnInit {
           this.methodName = '匯款';
           this.methodColor = 'tertiary';
           this.methodIocn = 'card';
+          this.posService.setPaidMoney(this.totalPrice);
           this.posService.setPayMethodSelected(true);
+
+          this.showCalculator = false;
 
         }
       }
@@ -94,7 +114,11 @@ export class PaymentComponent implements OnInit {
           this.methodName = '蝦皮';
           this.methodColor = 'tertiary';
           this.methodIocn = 'storefront';
+
+          this.posService.setPaidMoney(this.totalPrice);
           this.posService.setPayMethodSelected(true);
+
+          this.showCalculator = false;
 
         }
       }
@@ -107,7 +131,10 @@ export class PaymentComponent implements OnInit {
           this.methodName = '露天';
           this.methodColor = 'tertiary';
           this.methodIocn = 'storefront';
+          console.log(this.totalPrice);
+          this.posService.setPaidMoney(this.totalPrice);
           this.posService.setPayMethodSelected(true);
+          this.showCalculator = false;
 
         }
       }
@@ -117,11 +144,7 @@ export class PaymentComponent implements OnInit {
         role: 'cancel',
         handler: () => {
           console.log('Cancel clicked');
-          this.methodIsSelected = false;
-          this.methodName = '選擇付款方式';
-          this.methodColor = 'danger';
-          this.methodIocn = 'apps';
-          this.posService.setPayMethodSelected(false);
+          this.optionCancel();
         }
       }]
     });
@@ -144,6 +167,10 @@ export class PaymentComponent implements OnInit {
     modal.onWillDismiss().then(result => {
       console.log(result.data);
       if (result.data) {
+        this.showCalculator = true;
+        this.paidMoney = result.data;
+        this.posService.setPaidMoney(this.paidMoney);
+        this.posService.setPayMethodSelected(true);
 
         // this. = result.data;
         // this.carrierIsSelected = true;
@@ -151,9 +178,22 @@ export class PaymentComponent implements OnInit {
         // this.type = this.enteredCarrierNumber;
         // this.icon = 'phone-portrait-outline';
         // this.posService.setTaxSelected(true);
-      }
+      } else {
+        this.optionCancel();
 
+      }
     });
     return await modal.present();
+  }
+
+  optionCancel() {
+    this.methodIsSelected = false;
+    this.methodName = '選擇付款方式';
+    this.methodColor = 'danger';
+    this.methodIocn = 'apps';
+    this.posService.setPaidMoney(0);
+
+    this.posService.setPayMethodSelected(false);
+    this.showCalculator = false;
   }
 }

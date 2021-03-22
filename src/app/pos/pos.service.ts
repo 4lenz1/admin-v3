@@ -26,6 +26,10 @@ export class PosService {
   ];
   totalPricechanged = new EventEmitter<number>();
   ProdcutsChanged = new EventEmitter<Product[]>();
+  paidMoneyChanged = new EventEmitter<number>();
+  calculateMoneyChanged = new EventEmitter<number>();
+
+  private paidMoney = 0;
   private totalPrice = 0;
   private isTaxSelected = false;
   // isRecipeSelected = false;
@@ -35,6 +39,11 @@ export class PosService {
 
   constructor() { }
 
+  setPaidMoney(value: number) {
+    this.paidMoney = value;
+
+    this.paidMoneyChanged.emit(this.paidMoney);
+  }
   setTaxSelected(value: boolean) {
     this.isTaxSelected = value;
     this.setCanCheckOut();
@@ -44,14 +53,15 @@ export class PosService {
     this.setCanCheckOut();
   }
   setCanCheckOut() {
-    if (this.isTaxSelected && this.isPayMethodSelected) {
+    if (this.isTaxSelected
+      && this.isPayMethodSelected
+      && this.paidMoney >= this.totalPrice
+      && this.totalPrice > 0) {
       this.checkoutValidateChanged.emit(true);
     } else {
       this.checkoutValidateChanged.emit(false);
     }
   }
-
-
 
   getOriginalTotalPrice() {
     this.totalPrice = 0;
@@ -63,12 +73,36 @@ export class PosService {
   }
   setTotalPrice(value: number) {
     this.totalPrice = value;
+    this.totalPricechanged.emit(this.totalPrice);
+
   }
+
+
 
   getProductList() {
     return this.products.slice();
   }
+  addProduct(product: Product) {
+    const exist = this.products.find(arr => {
+      return arr.id === product.id;
+    });
+    if (exist) {
+      exist.amount++;
+      const newProducts = this.products.map((item) => {
+        if (item.id === exist.id) {
+          const obj = Object.assign({}, item, exist);
+          return obj;
+        }
+        return item;
+      });
+      this.products = newProducts;
+    } else {
+      this.products.push(product);
+    }
 
+    this.ProdcutsChanged.emit(this.products);
+    this.totalPricechanged.emit(this.getOriginalTotalPrice());
+  }
   setProduct(product: Product) {
     const newProducts = this.products.map((item) => {
       if (item.id === product.id) {
@@ -90,7 +124,7 @@ export class PosService {
     this.ProdcutsChanged.emit(this.products);
   }
 
-  //get product info by barcode
+  // get product info by barcode
   getProductByBarCode(value: string) {
     //   for test now
     this.products.unshift(new Product(
@@ -102,5 +136,4 @@ export class PosService {
     this.totalPricechanged.emit(this.getOriginalTotalPrice());
     this.ProdcutsChanged.emit(this.products);
   }
-
 }

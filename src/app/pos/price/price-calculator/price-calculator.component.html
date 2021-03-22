@@ -1,0 +1,20 @@
+<ion-card *ngIf="showCalculator">
+  <ion-card-header style="padding-bottom:5px;">
+    <ion-card-title class="ion-text-right">
+      {{moneyShouldPaid | currency : 'NTD' : '' : '1.0-0'}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-header style="padding-top:5px; padding-bottom: 5px;">
+    <ion-card-title class="ion-text-right">
+      ― {{paidMoney | currency : 'NTD' : '' : '1.0-0'}}
+    </ion-card-title>
+  </ion-card-header>
+  <hr class="soild">
+  <ion-card-header style="padding-top:5px; padding-bottom: 5px;">
+    <ion-card-title color="{{color}}" class="ion-text-right">
+      {{resultText}} {{ calculatorResult | currency : 'NTD' : '' : '1.0-0' }}
+    </ion-card-title>
+  </ion-card-header>
+
+  <!-- <p>wqeqweqw</p> -->
+</ion-card>
