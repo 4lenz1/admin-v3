@@ -171,13 +171,6 @@ export class PaymentComponent implements OnInit {
         this.paidMoney = result.data;
         this.posService.setPaidMoney(this.paidMoney);
         this.posService.setPayMethodSelected(true);
-
-        // this. = result.data;
-        // this.carrierIsSelected = true;
-        // this.color = 'warning';
-        // this.type = this.enteredCarrierNumber;
-        // this.icon = 'phone-portrait-outline';
-        // this.posService.setTaxSelected(true);
       } else {
         this.optionCancel();
 

@@ -23,6 +23,7 @@ export class PriceCalculatorComponent implements OnInit {
       this.setResultText();
     });
     this.posService.totalPricechanged.subscribe(price => {
+      console.log('total price chaged ' + price);
       this.setMoneyShouldPay(price);
       this.setResultText();
 

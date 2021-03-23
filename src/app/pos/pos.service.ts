@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Product } from './product.model';
 
 @Injectable({
@@ -39,6 +39,7 @@ export class PosService {
 
   constructor() { }
 
+
   setPaidMoney(value: number) {
     this.paidMoney = value;
 
@@ -53,6 +54,15 @@ export class PosService {
     this.setCanCheckOut();
   }
   setCanCheckOut() {
+    // console.log('isTaxSelected ' + this.isTaxSelected);
+    // console.log('isPayMethodSelected ' + this.isPayMethodSelected);
+    // console.log('paidmoney ' + this.paidMoney);
+    // console.log('totalprice ' + this.totalPrice);
+
+    // console.log('this.paidMoney >= this.totalPrice ' + (this.paidMoney >= this.totalPrice));
+    // console.log('totalPrice > 0 ' + (this.totalPrice > 0));
+
+
     if (this.isTaxSelected
       && this.isPayMethodSelected
       && this.paidMoney >= this.totalPrice
@@ -64,18 +74,34 @@ export class PosService {
   }
 
   getOriginalTotalPrice() {
-    this.totalPrice = 0;
+    // this.totalPrice = 0;
+    let price = 0;
     this.products.forEach(x => {
-      this.totalPrice += x.amount * x.unitPrice;
+      price += x.amount * x.unitPrice;
     });
     // console.log('total price', this.totalPrice)
-    return this.totalPrice;
+    return price;
+  }
+  resetTotalPrice() {
+    const price = this.getOriginalTotalPrice();
+    this.setTotalPrice(price);
   }
   setTotalPrice(value: number) {
+
     this.totalPrice = value;
+    console.log('total price be4 ' + this.totalPrice);
+    this.setCanCheckOut();
+
     this.totalPricechanged.emit(this.totalPrice);
+    console.log('total price after' + this.totalPrice);
+
 
   }
+
+
+  // setTotalPriceWhenDiscount(value: number) {
+  //   this.totalPrice = value;
+  // }
 
 
 
@@ -113,7 +139,9 @@ export class PosService {
     });
     this.products = newProducts;
 
-    this.totalPricechanged.emit(this.getOriginalTotalPrice());
+    const price = this.getOriginalTotalPrice();
+    this.totalPricechanged.emit(price);
+    this.setTotalPrice(price);
   }
 
   deleteProduct(id: string) {

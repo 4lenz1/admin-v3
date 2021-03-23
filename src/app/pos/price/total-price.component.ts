@@ -21,11 +21,22 @@ export class TotalPriceComponent implements OnInit {
   color = 'primary';
   ngOnInit() {
     this.totalPrice = this.posService.getOriginalTotalPrice();
+    this.posService.setTotalPrice(this.totalPrice);
+
     this.posService.totalPricechanged.subscribe(result => {
+      console.log('total price chaged ' + result);
       this.totalPrice = result;
-      this.isDiscounted = false;
       this.discountTotalPrice = this.totalPrice;
-      this.color = 'primary';
+
+      if (result === this.posService.getOriginalTotalPrice()) {
+        this.isDiscounted = false;
+        this.color = 'primary';
+      } else {
+        // this.totalPrice = result;
+        this.isDiscounted = true;
+        this.color = 'warning';
+      }
+
     });
   }
   async onPriceClick() {
@@ -42,6 +53,7 @@ export class TotalPriceComponent implements OnInit {
   }
   onResetClick() {
     if (this.isDiscounted) {
+      this.posService.resetTotalPrice();
       this.discountTotalPrice = this.posService.getOriginalTotalPrice();
       this.changeTotalPrice();
     } else {
@@ -51,7 +63,9 @@ export class TotalPriceComponent implements OnInit {
 
   changeTotalPrice() {
     if (this.discountTotalPrice !== this.posService.getOriginalTotalPrice()) {
+
       this.color = 'warning';
+      console.log('discount price !');
       this.isDiscounted = true;
       this.posService.setTotalPrice(this.discountTotalPrice);
       this.totalPrice = this.discountTotalPrice;
@@ -60,6 +74,7 @@ export class TotalPriceComponent implements OnInit {
       this.color = 'primary';
       this.isDiscounted = false;
       this.totalPrice = this.posService.getOriginalTotalPrice();
+      this.posService.setTotalPrice(this.totalPrice);
 
     }
   }
