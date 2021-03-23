@@ -1,43 +1,54 @@
 <ion-item mode="ios">
   <ion-grid>
     <ion-row>
-      <ion-col  size-xs="9" size-sm="9" size-md="9" size-xl="9">
-
+      <ion-col size-xs="12" size-md="9"  size="9">
         <ion-label class="ion-text-wrap">
           <h2> {{product.name}}</h2>
         </ion-label>
       </ion-col>
-      <ion-col size-xs="3" size-sm="3" size-md="3" size-xl="3">
-        <ion-label size="large">
-          {{product.unitPrice  | currency : 'NTD': ' ' : '1.0-0'}}
-        </ion-label>
+      <ion-col class="ion-text-center" size-xs="12" size-md="3" size="3">
+        <ion-row>
+          <ion-label size="large">
+            {{product.unitPrice  | currency : 'NTD': ' ' : '1.0-0'}}
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label>
+            <ion-button class="ion-no-padding" fill="clear" (click)="minusAmount()">
+              <ion-icon icon-only slot="icon-only" color="warning" size="large" name="remove-circle-outline"></ion-icon>
+            </ion-button>
+            <span> {{product.amount}}</span>
+            <ion-button  class="ion-no-padding" fill="clear" (click)="addAmount()">
+              <ion-icon color="secondary" size="large" name="add-circle"></ion-icon>
+            </ion-button>
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label>
+            {{product.amount * product.unitPrice |currency :'NT' : ' ': '1.0-0'}}
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label>
+            <ion-button fill="clear" (click)="onDelete()">
+              <ion-icon color="danger" size="large" name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-label>
+        </ion-row>
+
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <!-- <ion-row>
       <ion-col size-xs="5" size-sm="4" size-md="5" size-xl="5">
-        <ion-label>
-          <ion-button  fill="clear" (click)="minusAmount()">
-            <ion-icon icon-only slot="icon-only" color="warning" size="large" name="remove-circle-outline"></ion-icon>
-          </ion-button>
-          <span> {{product.amount}}</span>
-          <ion-button fill="clear" (click)="addAmount()">
-            <ion-icon color="secondary" size="large" name="add-circle"></ion-icon>
-          </ion-button>
-        </ion-label>
+
       </ion-col>
       <ion-col size-xs="5" size-sm="5" size-md="5" size-xl="5">
-        <ion-label>
-          {{product.amount * product.unitPrice |currency :'NT' : ' ': '1.0-0'}}
-        </ion-label>
+
       </ion-col>
       <ion-col size-xs="2" size-sm="2" size-md="2" size-xl="2">
-        <ion-label>
-          <ion-button fill="clear" (click)="onDelete()">
-            <ion-icon color="danger" size="large" name="close-circle-outline"></ion-icon>
-          </ion-button>
-        </ion-label>
+
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-item>
