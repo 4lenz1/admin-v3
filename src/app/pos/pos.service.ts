@@ -54,15 +54,6 @@ export class PosService {
     this.setCanCheckOut();
   }
   setCanCheckOut() {
-    // console.log('isTaxSelected ' + this.isTaxSelected);
-    // console.log('isPayMethodSelected ' + this.isPayMethodSelected);
-    // console.log('paidmoney ' + this.paidMoney);
-    // console.log('totalprice ' + this.totalPrice);
-
-    // console.log('this.paidMoney >= this.totalPrice ' + (this.paidMoney >= this.totalPrice));
-    // console.log('totalPrice > 0 ' + (this.totalPrice > 0));
-
-
     if (this.isTaxSelected
       && this.isPayMethodSelected
       && this.paidMoney >= this.totalPrice
@@ -98,10 +89,6 @@ export class PosService {
 
   }
 
-
-  // setTotalPriceWhenDiscount(value: number) {
-  //   this.totalPrice = value;
-  // }
 
 
 
@@ -163,5 +150,9 @@ export class PosService {
     ));
     this.totalPricechanged.emit(this.getOriginalTotalPrice());
     this.ProdcutsChanged.emit(this.products);
+  }
+
+  checkOut() {
+
   }
 }
