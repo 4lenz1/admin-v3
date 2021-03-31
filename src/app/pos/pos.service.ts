@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Product } from './product.model';
 
@@ -37,7 +38,7 @@ export class PosService {
   // private canCheckout = false;
   checkoutValidateChanged = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
 
   setPaidMoney(value: number) {
@@ -152,7 +153,7 @@ export class PosService {
     this.ProdcutsChanged.emit(this.products);
   }
 
-  checkOut() {
-
-  }
+  // checkOut() {
+  //   this.httpClient.post('')
+  // }
 }
