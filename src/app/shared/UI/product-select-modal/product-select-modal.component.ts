@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/product.service';
 export class ProductSelectModalComponent implements OnInit {
   products: any;
   matchedProducts = [];
+  showResult = false;
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
@@ -44,6 +45,8 @@ export class ProductSelectModalComponent implements OnInit {
 
     const fuse = new Fuse(this.products, options);
     this.matchedProducts = fuse.search(value);
+
+    this.showResult = this.matchedProducts.length > 0 ? true : false;
   }
 
 }
