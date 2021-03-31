@@ -3,7 +3,8 @@ import { ProductService } from './../../product.service';
 import { PosService } from './../pos.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
-import { IonInput, AlertController } from '@ionic/angular';
+import { IonInput, AlertController, ModalController } from '@ionic/angular';
+import { ProductSelectModalComponent } from 'src/app/shared/UI/product-select-modal/product-select-modal.component';
 
 @Component({
   selector: 'app-bar-code',
@@ -21,7 +22,8 @@ export class BarCodeComponent implements OnInit {
 
   constructor(private posService: PosService
     , private productService: ProductService
-    , private alertController: AlertController) { }
+    , private alertController: AlertController
+    , private modalController:ModalController) { }
 
   ngOnInit() { }
   onCamScanning() {
@@ -45,8 +47,18 @@ export class BarCodeComponent implements OnInit {
     this.posService.getProductByBarCode('1000');
   }
 
-  onSearch(value: string) {
-    this.posService.getProductByBarCode('1000');
+   presentModal() {
+  }
+
+
+  async onSearch(value: string) {
+    const modal = await this.modalController.create({
+      component: ProductSelectModalComponent,
+      // cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+
+    // this.posService.getProductByBarCode('1000');
 
   }
 

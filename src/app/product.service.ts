@@ -14,4 +14,11 @@ export class ProductService {
     return this.httpClient.get<any>('https://api.jmplus.com.tw/Product/Code?scan_code=' + code);
 
   }
+  getProductIndexList() {
+    return this.httpClient.get<any>('https://api.jmplus.com.tw/Product/GetOnlineProductNameList');
+  }
+
+  getProductBriefById(id: number) {
+    return this.httpClient.get<any>('https://api.jmplus.com.tw/ProductOrder/GetProductInfo?id=' + id);
+  }
 }

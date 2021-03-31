@@ -6,6 +6,8 @@ import { Product } from './product.model';
   providedIn: 'root'
 })
 export class PosService {
+
+  // private products: Product;
   private products = [
     new Product(
       '1',

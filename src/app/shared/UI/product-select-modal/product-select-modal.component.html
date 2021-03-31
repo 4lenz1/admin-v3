@@ -1,0 +1,13 @@
+<ion-searchbar 
+  (ionChange)="onSearch($event.target.value)" 
+  inputmode="text" 
+  placeholder="搜尋產品" 
+  showCancelButton="focus">
+</ion-searchbar>
+
+
+<app-select-product-list *ngIf="matchedProducts.length > 0" [products]="matchedProducts"></app-select-product-list>
+
+<ion-toolbar>
+  <ion-title *ngIf="matchedProducts == 0 ">你要找什麼咧 ?!</ion-title>
+</ion-toolbar>

@@ -24,6 +24,9 @@ import { PopoverItemComponent } from './popover-list/popover-item/popover-item.c
 import { PriceDetailComponent } from './price/price-detail/price-detail.component';
 import { InputModalComponent } from './UI/input-modal/input-modal.component';
 import { PriceCalculatorComponent } from './price/price-calculator/price-calculator.component';
+import { ProductSelectModalComponent } from '../shared/UI/product-select-modal/product-select-modal.component';
+import { ProductSelectItemComponent } from '../shared/UI/product-select-modal/product-select-item/product-select-item.component';
+import { ProductSelectListComponent } from '../shared/UI/product-select-modal/product-select-list/product-select-list.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -49,7 +52,10 @@ import { PriceCalculatorComponent } from './price/price-calculator/price-calcula
     PopoverItemComponent,
     PopoverListComponent,
     InputModalComponent,
-    PriceCalculatorComponent
+    PriceCalculatorComponent,
+    ProductSelectModalComponent,
+    ProductSelectItemComponent,
+    ProductSelectListComponent
   ]
 
 })
