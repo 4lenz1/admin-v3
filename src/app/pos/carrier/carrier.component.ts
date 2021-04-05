@@ -95,7 +95,6 @@ export class CarrierComponent implements OnInit {
 
 
   async onCarrierOptionClick() {
-    this.posService.setCamScanStatus(true);
     const modal = await this.modalController.create({
       component: CamScannerModalComponent,
       backdropDismiss: false,

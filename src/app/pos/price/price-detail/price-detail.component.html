@@ -11,7 +11,7 @@
     </ion-item>
     <ion-item>
       <ion-label>折數</ion-label>
-      <ion-input id="discountRate" value="number" type="number" (keyup)="onPriceChange($event.target.offsetParent.id)"
+      <ion-input id="discountRate" max="99" value="number" type="number" (keyup)="onPriceChange($event.target.offsetParent.id)"
         [(ngModel)]="discountRate" placeholder="1~10"></ion-input>
     </ion-item>
     <ion-item>

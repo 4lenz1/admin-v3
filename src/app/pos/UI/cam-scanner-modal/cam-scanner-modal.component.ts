@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { BarcodeFormat } from '@zxing/library';
 
 
 @Component({
@@ -10,12 +11,14 @@ import { ModalController } from '@ionic/angular';
 export class CamScannerModalComponent implements OnInit {
 
 
-  @Input() format: [];
+  @Input() format: BarcodeFormat[];
   constructor(private modalController: ModalController) { }
 
 
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.format);
+   }
 
   onCodeResult(result) {
     this.modalController.dismiss(result);

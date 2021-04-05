@@ -31,8 +31,9 @@ export class PosService {
   ProdcutsChanged = new EventEmitter<Product[]>();
   paidMoneyChanged = new EventEmitter<number>();
   calculateMoneyChanged = new EventEmitter<number>();
-  camStatusChanged = new EventEmitter<boolean>();
-  private camStatus = false;
+
+  
+  
   private paidMoney = 0;
   private totalPrice = 0;
   private isTaxSelected = false;
@@ -169,8 +170,5 @@ export class PosService {
   //   this.httpClient.post('')
   // }
 
-  setCamScanStatus(status: boolean) {
-    this.camStatus = status;
-    this.camStatusChanged.emit(status);
-  }
+ 
 }

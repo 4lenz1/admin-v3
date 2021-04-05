@@ -30,7 +30,6 @@ export class BarCodeComponent implements OnInit {
   async onCamScanning() {
 
     this.barcodeIconColor = 'warning';
-    this.posService.setCamScanStatus(true);
     this.barCodeScanning = false;
     this.camIconColor = (this.camIconColor === 'warning') ? 'success' : 'warning';
 
