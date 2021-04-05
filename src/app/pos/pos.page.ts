@@ -1,3 +1,4 @@
+import { PosService } from './pos.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,13 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PosPage implements OnInit {
 
+  scanStatus = false;
 
-
+  constructor(private posService: PosService) { }
   ngOnInit() {
-
+    this.posService.camStatusChanged.subscribe(result => {
+      this.scanStatus = result;
+    });
   }
-
-
-
-
 }

@@ -1,10 +1,13 @@
+import { PosService } from './../pos.service';
 import { PopoverListComponent } from './../popover-list/popover-list.component';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
+import { BarcodeFormat } from '@zxing/library';
+
 // import { PopinfoComponent } from '../popinfo/popinfo.component';
 import { Popover } from '../popover-list/popover-models';
-import { InputModalComponent } from '../UI/input-modal/input-modal.component';
+import { CamScannerModalComponent } from '../UI/cam-scanner-modal/cam-scanner-modal.component';
 @Component({
   selector: 'app-carrier',
   templateUrl: './carrier.component.html',
@@ -15,7 +18,9 @@ export class CarrierComponent implements OnInit {
   icon = 'help-circle';
   color = 'warning';
   type = '紙本發票';
+
   carrierIsSelected = false;
+  scanAllowedFormats = [BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.EAN_8];
   carrierItems = [new Popover('recipe', '紙本發票'), new Popover('carrier', '手機載具')];
   show = {
     showCardTitle: true,
@@ -25,7 +30,8 @@ export class CarrierComponent implements OnInit {
   enteredCarrierNumber: string;
 
   constructor(private popoverController: PopoverController
-    ,         private modalController: ModalController) { }
+    , private modalController: ModalController,
+    private posService: PosService) { }
 
 
   ngOnInit() { }
@@ -58,23 +64,51 @@ export class CarrierComponent implements OnInit {
 
 
 
+  // async onCarrierOptionClick() {
+  //   const modal = await this.modalController.create({
+  //     component: InputModalComponent,
+  //     componentProps: {
+  //       placeHolder: '載具號碼 /123-ABC',
+  //       type: 'string',
+  //       minLength: 8,
+  //       maxLength: 8
+  //     },
+  //     backdropDismiss: false
+  //     // cssClass: 'my-custom-class'
+  //   });
+
+  //   modal.onWillDismiss().then(result => {
+  //     console.log(result.data);
+  //     if (result.data) {
+
+  //       this.enteredCarrierNumber = result.data;
+  //       this.carrierIsSelected = true;
+  //       this.color = 'warning';
+  //       this.type = this.enteredCarrierNumber;
+  //       this.icon = 'phone-portrait-outline';
+  //       // this.posService.setTaxSelected(true);
+  //     }
+
+  //   });
+  //   return await modal.present();
+  // }
+
+
   async onCarrierOptionClick() {
+    this.posService.setCamScanStatus(true);
     const modal = await this.modalController.create({
-      component: InputModalComponent,
+      component: CamScannerModalComponent,
+      backdropDismiss: false,
       componentProps: {
-        placeHolder: '載具號碼 /123-ABC',
-        type: 'string',
-        minLength: 8,
-        maxLength: 8
-      },
-      backdropDismiss: false
+        format: this.scanAllowedFormats
+      }
       // cssClass: 'my-custom-class'
     });
 
     modal.onWillDismiss().then(result => {
+      const data = result.data;
       console.log(result.data);
-      if (result.data) {
-
+      if (data) {
         this.enteredCarrierNumber = result.data;
         this.carrierIsSelected = true;
         this.color = 'warning';
@@ -82,8 +116,8 @@ export class CarrierComponent implements OnInit {
         this.icon = 'phone-portrait-outline';
         // this.posService.setTaxSelected(true);
       }
-
     });
+
     return await modal.present();
   }
 }

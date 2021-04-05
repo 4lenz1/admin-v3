@@ -21,7 +21,7 @@ export class ProductSelectItemComponent implements OnInit {
   onProductSelect() {
     this.productService.getProductBriefById(this.product.Id).subscribe(result => {
       const showPrice = result.Special_Price !== 0 ? result.Special_Price : result.Sale_Price;
-      this.posService.addProduct(new Product(result.Id, result.Name, 1, showPrice));
+      this.posService.addProduct(new Product(result.Id, result.Name, 1, +showPrice));
     });
     console.log(this.product);
   }

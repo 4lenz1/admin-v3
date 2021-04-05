@@ -31,7 +31,8 @@ export class PosService {
   ProdcutsChanged = new EventEmitter<Product[]>();
   paidMoneyChanged = new EventEmitter<number>();
   calculateMoneyChanged = new EventEmitter<number>();
-
+  camStatusChanged = new EventEmitter<boolean>();
+  private camStatus = false;
   private paidMoney = 0;
   private totalPrice = 0;
   private isTaxSelected = false;
@@ -57,6 +58,14 @@ export class PosService {
     this.setCanCheckOut();
   }
   setCanCheckOut() {
+
+    console.log(this.isTaxSelected
+      , this.isPayMethodSelected,
+      this.totalPrice,
+      this.paidMoney
+      , this.paidMoney >= this.totalPrice
+      , this.totalPrice > 0);
+
     if (this.isTaxSelected
       && this.isPayMethodSelected
       && this.paidMoney >= this.totalPrice
@@ -73,7 +82,7 @@ export class PosService {
     this.products.forEach(x => {
       price += x.amount * x.unitPrice;
     });
-    // console.log('total price', this.totalPrice)
+
     return price;
   }
   resetTotalPrice() {
@@ -83,13 +92,10 @@ export class PosService {
   setTotalPrice(value: number) {
 
     this.totalPrice = value;
-    console.log('total price be4 ' + this.totalPrice);
+    console.log(' set total price to : ' + this.totalPrice);
     this.setCanCheckOut();
 
     this.totalPricechanged.emit(this.totalPrice);
-    console.log('total price after' + this.totalPrice);
-
-
   }
 
 
@@ -99,6 +105,7 @@ export class PosService {
     return this.products.slice();
   }
   addProduct(product: Product) {
+    console.log('add product: ' + product.unitPrice);
     const exist = this.products.find(arr => {
       return arr.id === product.id;
     });
@@ -117,7 +124,8 @@ export class PosService {
     }
 
     this.ProdcutsChanged.emit(this.products);
-    this.totalPricechanged.emit(this.getOriginalTotalPrice());
+    this.setTotalPrice(this.getOriginalTotalPrice());
+    // this.totalPricechanged.emit();
   }
   setProduct(product: Product) {
     const newProducts = this.products.map((item) => {
@@ -130,7 +138,7 @@ export class PosService {
     this.products = newProducts;
 
     const price = this.getOriginalTotalPrice();
-    this.totalPricechanged.emit(price);
+    // this.totalPricechanged.emit(price);
     this.setTotalPrice(price);
   }
 
@@ -138,7 +146,8 @@ export class PosService {
     this.products = this.products.filter(result =>
       result.id !== id);
 
-    this.totalPricechanged.emit(this.getOriginalTotalPrice());
+    // this.totalPricechanged.emit(this.getOriginalTotalPrice());
+    this.setTotalPrice(this.getOriginalTotalPrice());
     this.ProdcutsChanged.emit(this.products);
   }
 
@@ -151,11 +160,17 @@ export class PosService {
       1,
       3000
     ));
-    this.totalPricechanged.emit(this.getOriginalTotalPrice());
+    this.setTotalPrice(this.getOriginalTotalPrice());
+    // this.totalPricechanged.emit();
     this.ProdcutsChanged.emit(this.products);
   }
 
   // checkOut() {
   //   this.httpClient.post('')
   // }
+
+  setCamScanStatus(status: boolean) {
+    this.camStatus = status;
+    this.camStatusChanged.emit(status);
+  }
 }

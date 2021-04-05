@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
 import { IonInput, AlertController, ModalController } from '@ionic/angular';
 import { ProductSelectModalComponent } from 'src/app/shared/UI/product-select-modal/product-select-modal.component';
+import { CamScannerModalComponent } from '../UI/cam-scanner-modal/cam-scanner-modal.component';
 
 @Component({
   selector: 'app-bar-code',
@@ -23,15 +24,46 @@ export class BarCodeComponent implements OnInit {
   constructor(private posService: PosService
     , private productService: ProductService
     , private alertController: AlertController
-    , private modalController:ModalController) { }
+    , private modalController: ModalController) { }
 
   ngOnInit() { }
-  onCamScanning() {
-    this.camScanning = !this.camScanning;
-    this.barCodeScanning = false;
+  async onCamScanning() {
 
     this.barcodeIconColor = 'warning';
+    this.posService.setCamScanStatus(true);
+    this.barCodeScanning = false;
     this.camIconColor = (this.camIconColor === 'warning') ? 'success' : 'warning';
+
+    this.camScanning = !this.camScanning;
+
+    const modal = await this.modalController.create({
+      component: CamScannerModalComponent,
+      backdropDismiss: false,
+      componentProps: {
+        format: this.scanAllowedFormats
+      }
+      // cssClass: 'my-custom-class'
+    });
+
+    modal.onWillDismiss().then(result => {
+      const data = result.data;
+      console.log(result.data);
+      if (data) {
+        console.log('scan data :' + data);
+
+        this.posService.getProductByBarCode('1000');
+        this.camIconColor = (this.camIconColor === 'warning') ? 'success' : 'warning';
+
+        // this.posService.setTaxSelected(true);
+      }
+    });
+
+    return await modal.present();
+
+
+
+
+
   }
 
   onBarcodeScanning() {
@@ -42,12 +74,9 @@ export class BarCodeComponent implements OnInit {
     console.log(this.inputBarcodeEl);
     this.inputBarcodeEl.setFocus();
   }
-  onCodeResult(result: any) {
-    // this.scanResult = result;
-    this.posService.getProductByBarCode('1000');
-  }
 
-   presentModal() {
+
+  presentModal() {
   }
 
 

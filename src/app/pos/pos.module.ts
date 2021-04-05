@@ -27,6 +27,7 @@ import { PriceCalculatorComponent } from './price/price-calculator/price-calcula
 import { ProductSelectModalComponent } from '../shared/UI/product-select-modal/product-select-modal.component';
 import { ProductSelectItemComponent } from '../shared/UI/product-select-modal/product-select-item/product-select-item.component';
 import { ProductSelectListComponent } from '../shared/UI/product-select-modal/product-select-list/product-select-list.component';
+import { CamScannerModalComponent } from "./UI/cam-scanner-modal/cam-scanner-modal.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -55,7 +56,8 @@ import { ProductSelectListComponent } from '../shared/UI/product-select-modal/pr
     PriceCalculatorComponent,
     ProductSelectModalComponent,
     ProductSelectItemComponent,
-    ProductSelectListComponent
+    ProductSelectListComponent,
+    CamScannerModalComponent
   ]
 
 })
