@@ -86,6 +86,11 @@ export class PosService {
 
     return price;
   }
+
+  // ONLY use in payment modal 
+  getTotalPrice(){
+    return this.totalPrice;
+  }
   resetTotalPrice() {
     const price = this.getOriginalTotalPrice();
     this.setTotalPrice(price);
