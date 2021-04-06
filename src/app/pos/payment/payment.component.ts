@@ -162,11 +162,22 @@ export class PaymentComponent implements OnInit {
 
     modal.onDidDismiss().then(result => {
       if (result.data) {
+        console.log(result.data)
         const paidPrice = result.data.paidPrice;
         this.posService.setPaidMoney(paidPrice);
-        this.payMethod = result.data.payMethod;
+        this.payMethod = result.data.method;
         this.methodName = result.data.methodName;
         this.methodColor = 'primary';
+
+        // show calculator if payment is 現金
+        if (this.payMethod === 'cash') {
+          this.showCalculator = true;
+          // console.log('show calculator');
+        }else{
+          // console.log('hide calculator');
+
+          this.showCalculator = false;
+        }
       } else {
         this.methodColor = 'warning';
         this.methodName = '請選擇付款方式';
@@ -177,47 +188,4 @@ export class PaymentComponent implements OnInit {
 
     return await modal.present();
   }
-
-
-
-  async onCashOptionClick() {
-    const modal = await this.modalController.create({
-      component: InputModalComponent,
-      componentProps: {
-        placeHolder: '金額',
-        type: 'number',
-        minLength: 1,
-        // maxLength: 8
-      },
-      backdropDismiss: false
-      // cssClass: 'my-custom-class'
-    });
-
-    modal.onWillDismiss().then(result => {
-      console.log(result.data);
-      if (result.data) {
-        this.showCalculator = true;
-        this.paidMoney = result.data;
-        this.posService.setPaidMoney(this.paidMoney);
-        this.posService.setPayMethodSelected(true);
-      } else {
-        this.optionCancel();
-
-      }
-    });
-    return await modal.present();
-  }
-
-  optionCancel() {
-    this.methodIsSelected = false;
-    this.methodName = '選擇付款方式';
-    this.methodColor = 'danger';
-    this.methodIocn = 'apps';
-    this.posService.setPaidMoney(0);
-
-    this.posService.setPayMethodSelected(false);
-    this.showCalculator = false;
-  }
-
- 
 }
