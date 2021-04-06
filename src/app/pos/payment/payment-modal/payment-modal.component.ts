@@ -1,3 +1,4 @@
+import { ModalController } from '@ionic/angular';
 import { PosService } from './../../pos.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentModalComponent implements OnInit {
 
-  constructor(private posService: PosService) { }
+  constructor(private posService: PosService, private modalController: ModalController) { }
 
   payMethod = 'cash';
   totalPrice: number;
@@ -36,5 +37,9 @@ export class PaymentModalComponent implements OnInit {
 
   onLayawaySelect(value) {
     this.layaway = +value;
+  }
+
+  onDismissClick() {
+    this.modalController.dismiss();
   }
 }

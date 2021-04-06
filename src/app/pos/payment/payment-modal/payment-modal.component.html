@@ -61,4 +61,9 @@
   <ion-item *ngIf="payMethod === 'line-pay' || payMethod === 'credit-card'">
     <ion-input type="number" placeholder="授權碼" clearInput></ion-input>
   </ion-item>
+
+
 </ion-list>
+<ion-button (click)="onDismissClick()" expand="block" color="primary">
+  取消
+</ion-button>
