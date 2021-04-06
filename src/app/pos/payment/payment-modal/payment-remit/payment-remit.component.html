@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">搜尋銀行</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="onSearch($event.target.value)" ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-list>
+<ion-item *ngFor="let bank of matchedBank">
+  <ion-label> {{bank.name}} </ion-label>
+  <ion-note slot="end">{{bank.code}}</ion-note>
+</ion-item>
+  </ion-list>
+</ion-content>
+
+<!-- 
+<ion-button (click)="onCancelClick()" expand="block" color="primary">
+  取消
+</ion-button> -->
