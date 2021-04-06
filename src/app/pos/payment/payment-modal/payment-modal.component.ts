@@ -40,8 +40,7 @@ export class PaymentModalComponent implements OnInit {
     this.payMethod = value;
     if (value !== 'cash') {
       this.isConfirmDisabled = true;
-    }
-
+    } 
 
     if (value === 'cash') {
       this.cash();
@@ -57,6 +56,16 @@ export class PaymentModalComponent implements OnInit {
     } else if (value === 'line-pay') {
       this.authCodeLength = 5;
       this.methodName = 'LINE PAY';
+    } else if (value === 'jkos') {
+      this.methodName = '街口';
+      this.isConfirmDisabled = false;
+    } else if (value === 'ruten') {
+      this.methodName = '露天';
+      this.isConfirmDisabled = false;
+    } else if (value === 'shopee') {
+      this.methodName = '蝦皮';
+      this.isConfirmDisabled = false;
+
     }
   }
 

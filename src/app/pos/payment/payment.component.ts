@@ -179,7 +179,7 @@ export class PaymentComponent implements OnInit {
           this.showCalculator = false;
         }
       } else {
-        this.methodColor = 'warning';
+        this.methodColor = 'danger';
         this.methodName = '請選擇付款方式';
         this.payMethod = '';
         this.posService.setPaidMoney(0);
