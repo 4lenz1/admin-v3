@@ -12,6 +12,7 @@ import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 export class PaymentComponent implements OnInit {
   methodIsSelected = false;
   methodName = '選擇付款方式';
+  payMethod: string;
   methodColor = 'danger';
   methodIocn = 'apps';
   showCalculator = false;
@@ -163,6 +164,14 @@ export class PaymentComponent implements OnInit {
       if (result.data) {
         const paidPrice = result.data.paidPrice;
         this.posService.setPaidMoney(paidPrice);
+        this.payMethod = result.data.payMethod;
+        this.methodName = result.data.methodName;
+        this.methodColor = 'primary';
+      } else {
+        this.methodColor = 'warning';
+        this.methodName = '請選擇付款方式';
+        this.payMethod = '';
+        this.posService.setPaidMoney(0);
       }
     });
 
@@ -209,4 +218,6 @@ export class PaymentComponent implements OnInit {
     this.posService.setPayMethodSelected(false);
     this.showCalculator = false;
   }
+
+ 
 }
