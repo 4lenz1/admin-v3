@@ -29,6 +29,9 @@ import { ProductSelectItemComponent } from '../shared/UI/product-select-modal/pr
 import { ProductSelectListComponent } from '../shared/UI/product-select-modal/product-select-list/product-select-list.component';
 import { CamScannerModalComponent } from "./UI/cam-scanner-modal/cam-scanner-modal.component";
 import { PaymentModalComponent } from "./payment/payment-modal/payment-modal.component";
+import { PaymentRemitComponent } from "./payment/payment-modal/payment-remit/payment-remit.component";
+import { PaymentRemitItemComponent } from "./payment/payment-modal/payment-remit/payment-remit-item/payment-remit-item.component";
+
 @NgModule({
   imports: [
     CommonModule,
@@ -59,7 +62,9 @@ import { PaymentModalComponent } from "./payment/payment-modal/payment-modal.com
     ProductSelectItemComponent,
     ProductSelectListComponent,
     CamScannerModalComponent,
-    PaymentModalComponent
+    PaymentModalComponent,
+    PaymentRemitComponent,
+    PaymentRemitItemComponent
   ]
 
 })

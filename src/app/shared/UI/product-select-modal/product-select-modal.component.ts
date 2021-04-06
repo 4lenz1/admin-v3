@@ -12,16 +12,24 @@ export class ProductSelectModalComponent implements OnInit {
   products: any;
   matchedProducts = [];
   showResult = false;
+
+
+  // fuse;
   constructor(private productService: ProductService) { }
+
 
   ngOnInit() {
     this.productService.getProductIndexList().subscribe(result => {
       this.products = result;
     });
+    // this.fuse = new Fuse(this.products, this.options);
+
   }
 
 
   onSearch(value: any) {
+
+
     const options = {
       includeScore: true,
       minMatchCharLength: 2,
@@ -42,8 +50,9 @@ export class ProductSelectModalComponent implements OnInit {
         }
       ]
     };
-
     const fuse = new Fuse(this.products, options);
+
+    // console.log('value', value)
     this.matchedProducts = fuse.search(value);
 
     this.showResult = this.matchedProducts.length > 0 ? true : false;

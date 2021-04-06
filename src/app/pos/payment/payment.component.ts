@@ -160,8 +160,6 @@ export class PaymentComponent implements OnInit {
     });
 
     return await modal.present();
-
-
   }
 
 
