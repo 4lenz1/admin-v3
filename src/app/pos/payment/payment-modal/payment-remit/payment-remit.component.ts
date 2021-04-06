@@ -24,7 +24,7 @@ export class PaymentRemitComponent implements OnInit, AfterViewInit {
 
     this.options = {
       includeScore: true,
-      minMatchCharLength: 2,
+      minMatchCharLength: 1,
       threshold: 0.3,
       keys: [
         {

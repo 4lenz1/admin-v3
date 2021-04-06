@@ -1,13 +1,13 @@
-<ion-searchbar 
-  (ionChange)="onSearch($event.target.value)" 
-  inputmode="text" 
-  placeholder="搜尋產品" 
-  showCancelButton="focus">
-</ion-searchbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>你要找什麼咧 ?!</ion-title>
+  </ion-toolbar>
+  <ion-searchbar (ionChange)="onSearch($event.target.value)" inputmode="text" placeholder="搜尋產品">
+  </ion-searchbar>
+</ion-header>
 
+<ion-content fullscreen>
 
-<app-select-product-list *ngIf="showResult" [products]="matchedProducts"></app-select-product-list>
+  <app-select-product-list *ngIf="showResult" [products]="matchedProducts"></app-select-product-list>
 
-<ion-toolbar>
-  <ion-title *ngIf="!showResult">你要找什麼咧 ?!</ion-title>
-</ion-toolbar>
+</ion-content>
