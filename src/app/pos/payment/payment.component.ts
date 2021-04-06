@@ -159,6 +159,13 @@ export class PaymentComponent implements OnInit {
       backdropDismiss: false
     });
 
+    modal.onDidDismiss().then(result => {
+      if (result.data) {
+        const paidPrice = result.data.paidPrice;
+        this.posService.setPaidMoney(paidPrice);
+      }
+    });
+
     return await modal.present();
   }
 

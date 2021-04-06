@@ -21,7 +21,8 @@
 
   <!-- cash -->
   <ion-item *ngIf="payMethod === 'cash'">
-    <ion-input type="number" [value]="totalPrice" placeholder="總金額" clearInput></ion-input>
+    <ion-input #totalInput="ngModel" type="number" [(ngModel)]="totalPrice" (ionChange)="onTotalPriceChange()" placeholder="總金額" clearInput></ion-input>
+  <span *ngIf="totalInput.touched && isConfirmDisabled">金額不夠喔 !</span>
   </ion-item>
 
   <!-- credit card -->
@@ -72,6 +73,9 @@
   </ng-container>
 
 </ion-list>
-<ion-button (click)="onDismissClick()" expand="block" color="primary">
+<ion-button [disabled]="isConfirmDisabled" (click)="onConfirmClick()" expand="block" color="success">
+  確定
+</ion-button>
+<ion-button (click)="onCancelClick()" expand="block" color="primary">
   取消
 </ion-button>

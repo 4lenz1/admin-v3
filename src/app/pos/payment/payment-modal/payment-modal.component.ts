@@ -17,10 +17,13 @@ export class PaymentModalComponent implements OnInit {
   totalPrice: number;
   layaway = 1;
   remit: { code: string, name: string };
+  isConfirmDisabled = false;
+  payPrice = 0;
   ngOnInit() {
-    // get total price first 
+    // get total price first
     this.totalPrice = this.posService.getTotalPrice();
-
+    // 剛開始是 cash -> true
+    this.posService.setPayMethodSelected(true);
 
     this.posService.totalPricechanged.subscribe(result => {
       this.totalPrice = result;
@@ -29,23 +32,31 @@ export class PaymentModalComponent implements OnInit {
   onPaymentSelect(value) {
     console.log('changed', value);
     this.payMethod = value;
+    if (value !== 'cash') {
+      this.isConfirmDisabled = true;
+    }
+
+
     if (value === 'cash') {
       this.cash();
     } else if (value === 'remit') {
       this.onRemitSelect();
+    } else if (value === 'credit-card') {
+      // this.posService.setPayMethodSelected(false);
     }
-
   }
 
   cash() {
     this.totalPrice = this.posService.getTotalPrice();
+
   }
 
   onLayawaySelect(value) {
     this.layaway = +value;
   }
 
-  onDismissClick() {
+  onCancelClick() {
+    this.posService.setPayMethodSelected(false);
     this.modalController.dismiss();
   }
 
@@ -73,4 +84,21 @@ export class PaymentModalComponent implements OnInit {
     return await modal.present();
   }
 
+
+  onConfirmClick() {
+    console.log('total price : ', this.totalPrice);
+    this.modalController.dismiss({
+      paidPrice: this.totalPrice
+    });
+  }
+
+
+  onTotalPriceChange() {
+    const shouldPay = this.posService.getTotalPrice();
+    if (this.totalPrice >= shouldPay) {
+      this.isConfirmDisabled = false;
+    } else {
+      this.isConfirmDisabled = true;
+    }
+  }
 }
