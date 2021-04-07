@@ -1,7 +1,6 @@
 import { PosService } from './../pos.service';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
-import { InputModalComponent } from '../UI/input-modal/input-modal.component';
+import { ModalController } from '@ionic/angular';
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 
 @Component({
@@ -173,7 +172,7 @@ export class PaymentComponent implements OnInit {
         if (this.payMethod === 'cash') {
           this.showCalculator = true;
           // console.log('show calculator');
-        }else{
+        } else {
           // console.log('hide calculator');
 
           this.showCalculator = false;
