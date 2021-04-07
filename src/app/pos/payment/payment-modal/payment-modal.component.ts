@@ -21,6 +21,8 @@ export class PaymentModalComponent implements OnInit {
   isConfirmDisabled = false;
   payPrice = 0;
   authCodeLength: number;
+  paymentList: { name: string, payPrice: number, info: {} }[];
+
   @ViewChild('inputAuthCode', { read: ElementRef }) private authCodeEl: ElementRef;
   @ViewChild('inputCredit4Digi', { read: ElementRef }) private Credit4DigiEl: ElementRef;
   @ViewChild('inputRemit5Digi', { read: ElementRef }) private remit5DigiEl: ElementRef;
@@ -40,7 +42,7 @@ export class PaymentModalComponent implements OnInit {
     this.payMethod = value;
     if (value !== 'cash') {
       this.isConfirmDisabled = true;
-    } 
+    }
 
     if (value === 'cash') {
       this.cash();
@@ -65,7 +67,6 @@ export class PaymentModalComponent implements OnInit {
     } else if (value === 'shopee') {
       this.methodName = '蝦皮';
       this.isConfirmDisabled = false;
-
     }
   }
 
@@ -110,6 +111,8 @@ export class PaymentModalComponent implements OnInit {
 
   onConfirmClick() {
     console.log('total price : ', this.totalPrice);
+    
+    // when payPrice is enough
     this.modalController.dismiss({
       paidPrice: this.totalPrice,
       methodName: this.methodName,
