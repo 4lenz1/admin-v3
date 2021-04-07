@@ -14,7 +14,7 @@ export class PaymentComponent implements OnInit {
   methodName = '選擇付款方式';
   payMethod: string;
   methodColor = 'danger';
-  methodIocn = 'apps';
+  methodIcon = 'apps';
   showCalculator = false;
   paidMoney: number;
   totalPrice: number;
