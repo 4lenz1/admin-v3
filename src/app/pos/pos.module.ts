@@ -31,7 +31,7 @@ import { CamScannerModalComponent } from "./UI/cam-scanner-modal/cam-scanner-mod
 import { PaymentModalComponent } from "./payment/payment-modal/payment-modal.component";
 import { PaymentRemitComponent } from "./payment/payment-modal/payment-remit/payment-remit.component";
 import { PaymentRemitItemComponent } from "./payment/payment-modal/payment-remit/payment-remit-item/payment-remit-item.component";
-
+import { PaymentItemComponent } from "./payment/payment-modal/payment-item/payment-item.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -64,7 +64,8 @@ import { PaymentRemitItemComponent } from "./payment/payment-modal/payment-remit
     CamScannerModalComponent,
     PaymentModalComponent,
     PaymentRemitComponent,
-    PaymentRemitItemComponent
+    PaymentRemitItemComponent,
+    PaymentItemComponent
   ]
 
 })
