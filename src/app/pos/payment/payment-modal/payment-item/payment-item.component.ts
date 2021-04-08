@@ -1,5 +1,5 @@
 import { PaymentService } from './../../payment.service';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { PosService } from 'src/app/pos/pos.service';
 import { PaymentRemitComponent } from '../payment-remit/payment-remit.component';
@@ -11,7 +11,7 @@ import { Payment } from '../../payment.model';
   templateUrl: './payment-item.component.html',
   styleUrls: ['./payment-item.component.scss'],
 })
-export class PaymentItemComponent implements OnInit {
+export class PaymentItemComponent implements OnInit, AfterViewInit {
   @Input() payment: Payment;
   @Input() index;
   @Output() newPayment: EventEmitter<any> = new EventEmitter();
@@ -47,6 +47,21 @@ export class PaymentItemComponent implements OnInit {
     });
 
     this.payPrice = this.payment.payPrice;
+
+
+  }
+  ngAfterViewInit() {
+    this.getAuthCodeLength();
+  }
+
+  getAuthCodeLength() {
+    if (this.payment.name === 'credit-card') {
+      this.authCodeLength = 6;
+    } else if (this.payment.name === 'line-pay') {
+      this.authCodeLength = 5;
+    } else {
+      this.authCodeLength = 0;
+    }
   }
 
   onPaymentSelect(value) {
@@ -71,7 +86,7 @@ export class PaymentItemComponent implements OnInit {
       this.authCodeLength = 5;
       this.btnNewPaymentDisabled = false;
 
-      this.payment.name = 'LINE PAY';
+      this.payment.name = 'line-pay';
     } else if (value === 'jkos') {
       this.payment.name = 'jkos';
       this.isConfirmDisabled = false;

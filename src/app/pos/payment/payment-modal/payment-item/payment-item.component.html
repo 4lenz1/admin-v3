@@ -23,14 +23,14 @@
   </ion-item>
 
 
-  <ion-item *ngIf="payMethod !== 'ruten' && payMethod !== 'shopee' && payMethod !== 'remit'">
+  <ion-item *ngIf="payment.name !== 'ruten' && payMethod !== 'shopee' && payment.name !== 'remit'">
     <ion-input type="number" [(ngModel)]="payPrice" (ionChange)="onPayPriceChange()"
       placeholder="金額" clearInput></ion-input>
   </ion-item>
 
   <!-- credit card -->
 
-  <ion-item *ngIf="payMethod === 'credit-card'">
+  <ion-item *ngIf="payment.name === 'credit-card'">
     <ion-label>分期選項</ion-label>
     <ion-select (ionChange)="onLayawaySelect($event.detail.value)" value="1" okText="OKK !" cancelText="取消">
       <ion-select-option value="1">財富自由，一次付清</ion-select-option>
@@ -40,7 +40,7 @@
     </ion-select>
   </ion-item>
 
-  <ion-item *ngIf="payMethod === 'credit-card' && layaway !== 1 ">
+  <ion-item *ngIf="payment.name === 'credit-card' && layaway !== 1 ">
     <ion-label>分期銀行</ion-label>
     <ion-select value="" okText="OKK !" cancelText="取消">
       <ion-select-option value="中國信託">中國信託</ion-select-option>
@@ -62,14 +62,14 @@
     </ion-select>
   </ion-item>
 
-  <ion-item *ngIf="payMethod === 'line-pay' || payMethod === 'credit-card'">
+  <ion-item *ngIf="payment.name === 'line-pay' || payment.name === 'credit-card'">
     <ion-input #inputAuthCode (ionChange)="onCreditCardInfoChange()" type="number" placeholder="授權碼" clearInput>
     </ion-input>
     <span
       [ngClass]="{error : inputAuthCode.value.toString().length > authCodeLength}">{{inputAuthCode.value.toString().length}}/{{authCodeLength}}</span>
   </ion-item>
 
-  <ion-item *ngIf="payMethod === 'credit-card'">
+  <ion-item *ngIf="payment.name === 'credit-card'">
     <ion-input #inputCredit4Digi (ionChange)="onCreditCardInfoChange()" type="number" placeholder="末四碼" clearInput>
     </ion-input>
     <span
@@ -77,7 +77,7 @@
   </ion-item>
 
 
-  <ng-container *ngIf="payMethod=== 'remit'">
+  <ng-container *ngIf="payment.name=== 'remit'">
     <ion-item style="cursor: pointer;" (click)="onRemitItemClick()">
       <ion-label>{{remit?.code}} | {{remit?.name}}</ion-label>
     </ion-item>

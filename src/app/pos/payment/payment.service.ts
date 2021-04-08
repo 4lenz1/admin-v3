@@ -72,6 +72,7 @@ export class PaymentService {
     console.log(this.totalPrice);
     this.setBtnConfirm();
     this.posService.setPaidMoney(this.totalPrice);
+    this.posService.setCanCheckOut();
   }
 
   setBtnConfirm() {
