@@ -32,8 +32,7 @@ export class PosService {
   paidMoneyChanged = new EventEmitter<number>();
   calculateMoneyChanged = new EventEmitter<number>();
 
-  
-  
+
   private paidMoney = 0;
   private totalPrice = 0;
   private isTaxSelected = false;
@@ -87,7 +86,7 @@ export class PosService {
     return price;
   }
 
-  // ONLY use in payment modal 
+  // ONLY use in payment modal
   getTotalPrice(){
     return this.totalPrice;
   }
@@ -133,7 +132,7 @@ export class PosService {
     this.setTotalPrice(this.getOriginalTotalPrice());
     // this.totalPricechanged.emit();
   }
-  setProduct(product: Product) {
+  updateProduct(product: Product) {
     const newProducts = this.products.map((item) => {
       if (item.id === product.id) {
         const obj = Object.assign({}, item, product);
@@ -174,6 +173,4 @@ export class PosService {
   // checkOut() {
   //   this.httpClient.post('')
   // }
-
- 
 }

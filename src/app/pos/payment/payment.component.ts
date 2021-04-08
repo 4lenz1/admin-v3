@@ -18,7 +18,7 @@ export class PaymentComponent implements OnInit {
   paidMoney: number;
   totalPrice: number;
   constructor(private posService: PosService
-    , private modalController: ModalController) { }
+    ,         private modalController: ModalController) { }
 
   ngOnInit() {
     this.totalPrice = this.posService.getOriginalTotalPrice();
@@ -161,7 +161,7 @@ export class PaymentComponent implements OnInit {
 
     modal.onDidDismiss().then(result => {
       if (result.data) {
-        console.log(result.data)
+        console.log(result.data);
         const paidPrice = result.data.paidPrice;
         this.posService.setPaidMoney(paidPrice);
         this.payMethod = result.data.method;

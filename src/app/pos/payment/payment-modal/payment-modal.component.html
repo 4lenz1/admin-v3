@@ -8,7 +8,7 @@
 <ion-content>
   <app-payment-item 
   *ngFor="let payment of paymentList ;
-   let i  = index" [index]="i"
+   let i  = index" [index]="i" [payment]="payment"
    (newPayment)="addNewPayment()"></app-payment-item>
 
 

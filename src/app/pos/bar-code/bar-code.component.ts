@@ -22,9 +22,9 @@ export class BarCodeComponent implements OnInit {
   @ViewChild('inputBarcode') inputBarcodeEl: IonInput;
 
   constructor(private posService: PosService
-    , private productService: ProductService
-    , private alertController: AlertController
-    , private modalController: ModalController) { }
+    ,         private productService: ProductService
+    ,         private alertController: AlertController
+    ,         private modalController: ModalController) { }
 
   ngOnInit() { }
   async onCamScanning() {

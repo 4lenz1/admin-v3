@@ -14,22 +14,13 @@ import { PaymentRemitComponent } from './payment-remit/payment-remit.component';
 export class PaymentModalComponent implements OnInit {
 
   constructor(private posService: PosService,
-    private modalController: ModalController,
-    private paymentService: PaymentService) { }
+              private modalController: ModalController,
+              private paymentService: PaymentService) { }
 
-  // payMethod = 'cash';
-  // methodName = '現金';
+
   totalPrice: number;
-  // layaway = 1;
-  // remit: { code: string, name: string };
   isConfirmDisabled = false;
-  // payPrice = 0;
-  // authCodeLength: number;
   paymentList: Payment[];
-  // { name: string, payPrice: number, info: {} }
-  // @ViewChild('inputAuthCode', { read: ElementRef }) private authCodeEl: ElementRef;
-  // @ViewChild('inputCredit4Digi', { read: ElementRef }) private Credit4DigiEl: ElementRef;
-  // @ViewChild('inputRemit5Digi', { read: ElementRef }) private remit5DigiEl: ElementRef;
 
   ngOnInit() {
     // get total price first
@@ -43,91 +34,30 @@ export class PaymentModalComponent implements OnInit {
 
     // init payment list for payment app-payment-item
     this.paymentList = this.paymentService.getPaymentList();
-
-    this.paymentService.paymentChanged.subscribe(result => {
+    // when payment list changed
+    this.paymentService.paymentListChanged.subscribe(result => {
       this.paymentList = result;
+    });
+
+    // check wether confirm btn should disabled or not
+    this.paymentService.btnConfirmDisabledChanged.subscribe(result => {
+      this.isConfirmDisabled = result;
     });
   }
 
   addNewPayment() {
-    const id = this.paymentList.length ;
-    console.log('add new payment list id:' + id );
+    const id = this.paymentList.length;
+    console.log('add new payment list id:' + id);
 
     const payment = new Payment(id, 'cash', 0, {});
     this.paymentService.addPayment(payment);
   }
 
 
-  // onPaymentSelect(value) {
-  //   console.log('changed', value);
-  //   this.payMethod = value;
-  //   if (value !== 'cash') {
-  //     this.isConfirmDisabled = true;
-  //   }
-
-  //   if (value === 'cash') {
-  //     this.cash();
-  //     this.methodName = '現金';
-  //   } else if (value === 'remit') {
-  //     this.onRemitSelect();
-  //     this.methodName = '匯款';
-
-  //   } else if (value === 'credit-card') {
-  //     this.methodName = '刷卡';
-  //     this.authCodeLength = 6;
-  //     // this.posService.setPayMethodSelected(false);
-  //   } else if (value === 'line-pay') {
-  //     this.authCodeLength = 5;
-  //     this.methodName = 'LINE PAY';
-  //   } else if (value === 'jkos') {
-  //     this.methodName = '街口';
-  //     this.isConfirmDisabled = false;
-  //   } else if (value === 'ruten') {
-  //     this.methodName = '露天';
-  //     this.isConfirmDisabled = false;
-  //   } else if (value === 'shopee') {
-  //     this.methodName = '蝦皮';
-  //     this.isConfirmDisabled = false;
-  //   }
-  // }
-
-  // cash() {
-  //   this.totalPrice = this.posService.getTotalPrice();
-
-  // }
-
-  // onLayawaySelect(value) {
-  //   this.layaway = +value;
-  // }
-
   onCancelClick() {
     this.posService.setPayMethodSelected(false);
     this.modalController.dismiss();
   }
-
-
-  // 如果已選了匯款資訊，但要更改匯款銀行時
-  // onRemitItemClick() {
-  //   this.onRemitSelect();
-  // }
-
-
-  // when payMeth selet
-  // async onRemitSelect() {
-  //   const modal = await this.modalController.create({
-  //     component: PaymentRemitComponent,
-  //     backdropDismiss: false
-  //   });
-
-
-  //   modal.onWillDismiss().then(result => {
-  //     const data = result.data;
-  //     console.log('close modal , bank : ' + data);
-  //     this.remit = data;
-  //   });
-
-  //   return await modal.present();
-  // }
 
 
   onConfirmClick() {
@@ -141,45 +71,4 @@ export class PaymentModalComponent implements OnInit {
     });
   }
 
-
-  // onTotalPriceChange() {
-  //   const shouldPay = this.posService.getTotalPrice();
-  //   if (this.totalPrice >= shouldPay) {
-  //     this.isConfirmDisabled = false;
-  //   } else {
-  //     this.isConfirmDisabled = true;
-  //   }
-  // }
-
-  // onRemitInfoChange() {
-  //   const remitCode = this.remit5DigiEl.nativeElement.value;
-  //   if (remitCode.length === 5) {
-  //     this.isConfirmDisabled = false;
-  //   } else {
-  //     this.isConfirmDisabled = true;
-  //   }
-  // }
-
-
-  // onCreditCardInfoChange() {
-  //   const authCode = this.authCodeEl.nativeElement.value;
-
-
-  //   if (this.payMethod === 'line-pay') {
-  //     if (authCode.length === this.authCodeLength) {
-  //       this.isConfirmDisabled = false;
-  //     } else {
-  //       this.isConfirmDisabled = true;
-  //     }
-  //   } else {
-  //     const cardDigi = this.Credit4DigiEl.nativeElement.value;
-
-  //     // credit card
-  //     if (authCode.length === this.authCodeLength && cardDigi.length === 4) {
-  //       this.isConfirmDisabled = false;
-  //     } else {
-  //       this.isConfirmDisabled = true;
-  //     }
-  //   }
-  // }
 }

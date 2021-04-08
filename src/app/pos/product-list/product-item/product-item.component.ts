@@ -45,14 +45,14 @@ export class ProductItemComponent implements OnInit {
 
   addAmount() {
     this.product.amount++;
-    this.posService.setProduct(this.product);
+    this.posService.updateProduct(this.product);
   }
   minusAmount() {
     if (this.product.amount - 1 === 0) {
       this.onDelete();
     } else {
       this.product.amount--;
-      this.posService.setProduct(this.product);
+      this.posService.updateProduct(this.product);
     }
   }
 }

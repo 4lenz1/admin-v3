@@ -8,7 +8,7 @@
 
     </ng-template>
 
-    <ion-select (ionChange)="onPaymentSelect($event.detail.value)" placeholder="付款方式" value="cash" okText="OKK!"
+    <ion-select (ionChange)="onPaymentSelect($event.detail.value)" placeholder="付款方式" [value]="payment.name" okText="OKK!"
       cancelText="先不要">
       <ion-select-option value="cash">現金</ion-select-option>
       <ion-select-option value="credit-card">刷卡</ion-select-option>
@@ -24,9 +24,8 @@
 
 
   <ion-item *ngIf="payMethod !== 'ruten' && payMethod !== 'shopee' && payMethod !== 'remit'">
-    <ion-input #totalInput="ngModel" type="number" [(ngModel)]="totalPrice" (ionChange)="onTotalPriceChange()"
-      placeholder="總金額" clearInput></ion-input>
-    <span *ngIf="totalInput.touched && isConfirmDisabled">金額不夠喔 !</span>
+    <ion-input type="number" [(ngModel)]="payPrice" (ionChange)="onPayPriceChange()"
+      placeholder="金額" clearInput></ion-input>
   </ion-item>
 
   <!-- credit card -->

@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { ModalController, AlertController } from '@ionic/angular';
 import { PosService } from 'src/app/pos/pos.service';
 import { PaymentRemitComponent } from '../payment-remit/payment-remit.component';
+import { Payment } from '../../payment.model';
 
 
 @Component({
@@ -11,18 +12,21 @@ import { PaymentRemitComponent } from '../payment-remit/payment-remit.component'
   styleUrls: ['./payment-item.component.scss'],
 })
 export class PaymentItemComponent implements OnInit {
+  @Input() payment: Payment;
   @Input() index;
   @Output() newPayment: EventEmitter<any> = new EventEmitter();
+
   payMethod = 'cash';
   methodName = '現金';
   totalPrice: number;
   layaway = 1;
   remit: { code: string, name: string };
   isConfirmDisabled = false;
-  payPrice = 0;
+  payPrice: number;
   authCodeLength: number;
   paymentList: { name: string, payPrice: number, info: {} }[];
   btnNewPaymentDisabled = false;
+  info = {};
   @ViewChild('inputAuthCode', { read: ElementRef }) private authCodeEl: ElementRef;
   @ViewChild('inputCredit4Digi', { read: ElementRef }) private Credit4DigiEl: ElementRef;
   @ViewChild('inputRemit5Digi', { read: ElementRef }) private remit5DigiEl: ElementRef;
@@ -41,6 +45,8 @@ export class PaymentItemComponent implements OnInit {
     this.posService.totalPricechanged.subscribe(result => {
       this.totalPrice = result;
     });
+
+    this.payPrice = this.payment.payPrice;
   }
 
   onPaymentSelect(value) {
@@ -52,11 +58,11 @@ export class PaymentItemComponent implements OnInit {
 
     if (value === 'cash') {
       this.cash();
-      this.methodName = '現金';
+      this.payment.name = 'cash';
       this.btnNewPaymentDisabled = false;
 
     } else if (value === 'credit-card') {
-      this.methodName = '刷卡';
+      this.payment.name = 'credit-card';
       this.authCodeLength = 6;
       this.btnNewPaymentDisabled = false;
 
@@ -65,29 +71,30 @@ export class PaymentItemComponent implements OnInit {
       this.authCodeLength = 5;
       this.btnNewPaymentDisabled = false;
 
-      this.methodName = 'LINE PAY';
+      this.payment.name = 'LINE PAY';
     } else if (value === 'jkos') {
-      this.methodName = '街口';
+      this.payment.name = 'jkos';
       this.isConfirmDisabled = false;
       this.btnNewPaymentDisabled = false;
 
     }
     else if (value === 'remit') {
       this.onRemitSelect();
-      this.methodName = '匯款';
+      this.payment.name = 'remit';
       this.btnNewPaymentDisabled = true;
 
     } else if (value === 'ruten') {
-      this.methodName = '露天';
+      this.payment.name = 'ruten';
       this.btnNewPaymentDisabled = true;
 
       this.isConfirmDisabled = false;
     } else if (value === 'shopee') {
-      this.methodName = '蝦皮';
+      this.payment.name = 'shopee';
       this.isConfirmDisabled = false;
       this.btnNewPaymentDisabled = true;
-
     }
+
+    this.paymentService.setPayment(this.payment);
   }
 
   cash() {
@@ -123,13 +130,10 @@ export class PaymentItemComponent implements OnInit {
     return await modal.present();
   }
 
-  onTotalPriceChange() {
-    const shouldPay = this.posService.getTotalPrice();
-    if (this.totalPrice >= shouldPay) {
-      this.isConfirmDisabled = false;
-    } else {
-      this.isConfirmDisabled = true;
-    }
+  onPayPriceChange() {
+    this.payment.payPrice = this.payPrice;
+
+    this.paymentService.updateTotalPrice(this.payment);
   }
 
   onRemitInfoChange() {
@@ -169,33 +173,6 @@ export class PaymentItemComponent implements OnInit {
     this.newPayment.emit(null);
   }
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Confirm!',
-      message: 'Message <strong>text</strong>!!!',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-
-
   async onDeleteMethodClick() {
     const alert = await this.alertController.create({
       header: 'QAQ',
@@ -207,8 +184,8 @@ export class PaymentItemComponent implements OnInit {
         }, {
           text: '刪 ! 都刪 !',
           handler: () => {
-            console.log('delete method : ' + this.index);
-            this.paymentService.deletePayment(this.index);
+            console.log('delete method : ' + this.payment.id);
+            this.paymentService.deletePayment(this.payment.id);
           }
         }
       ]
