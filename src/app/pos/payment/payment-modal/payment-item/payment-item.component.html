@@ -14,9 +14,11 @@
       <ion-select-option value="credit-card">刷卡</ion-select-option>
       <ion-select-option value="jkos">街口</ion-select-option>
       <ion-select-option value="line-pay">LINE PAY</ion-select-option>
-      <ion-select-option value="remit">匯款</ion-select-option>
-      <ion-select-option value="shopee">蝦皮</ion-select-option>
-      <ion-select-option value="ruten">露天</ion-select-option>
+      <ng-container *ngIf="index ===0">
+        <ion-select-option value="remit">匯款</ion-select-option>
+        <ion-select-option value="shopee">蝦皮</ion-select-option>
+        <ion-select-option value="ruten">露天</ion-select-option>
+      </ng-container>
     </ion-select>
   </ion-item>
 
