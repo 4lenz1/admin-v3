@@ -58,8 +58,8 @@ export class PriceCalculatorComponent implements OnInit {
       // 找零
     } else if (result === 0) {
       // 剛好
-      this.resultText = '';
-      this.color = 'white';
+      this.resultText = 'OK';
+      this.color = 'primary';
 
     } else {
       // 不足
