@@ -8,8 +8,8 @@
 
     </ng-template>
 
-    <ion-select (ionChange)="onPaymentSelect($event.detail.value)" placeholder="付款方式" [value]="payment.name" okText="OKK!"
-      cancelText="先不要">
+    <ion-select (ionChange)="onPaymentSelect($event.detail.value)" placeholder="付款方式" [value]="payment.name"
+      okText="OKK!" cancelText="先不要">
       <ion-select-option value="cash">現金</ion-select-option>
       <ion-select-option value="credit-card">刷卡</ion-select-option>
       <ion-select-option value="jkos">街口</ion-select-option>
@@ -24,15 +24,15 @@
 
 
   <ion-item *ngIf="payment.name !== 'ruten' && payMethod !== 'shopee' && payment.name !== 'remit'">
-    <ion-input type="number" [(ngModel)]="payPrice" (ionChange)="onPayPriceChange()"
-      placeholder="金額" clearInput></ion-input>
+    <ion-input type="number" [(ngModel)]="payPrice" (ionChange)="onPayPriceChange()" placeholder="金額" clearInput>
+    </ion-input>
   </ion-item>
 
   <!-- credit card -->
 
   <ion-item *ngIf="payment.name === 'credit-card'">
     <ion-label>分期選項</ion-label>
-    <ion-select (ionChange)="onLayawaySelect($event.detail.value)" value="1" okText="OKK !" cancelText="取消">
+    <ion-select (ionChange)="onLayawaySelect($event.detail.value)" value="{{layaway}}" okText="OKK !" cancelText="取消">
       <ion-select-option value="1">財富自由，一次付清</ion-select-option>
       <ion-select-option value="3">3期</ion-select-option>
       <ion-select-option value="6">6期</ion-select-option>
@@ -63,29 +63,30 @@
   </ion-item>
 
   <ion-item *ngIf="payment.name === 'line-pay' || payment.name === 'credit-card'">
-    <ion-input #inputAuthCode (ionChange)="onCreditCardInfoChange()" type="number" placeholder="授權碼" clearInput>
+    <ion-input [(ngModel)]="authCode" (ionChange)="onCreditCardInfoChange()" type="number" placeholder="授權碼" clearInput>
     </ion-input>
-    <span
-      [ngClass]="{error : inputAuthCode.value.toString().length > authCodeLength}">{{inputAuthCode.value.toString().length}}/{{authCodeLength}}</span>
+    <!-- <span
+      [ngClass]="{error : authCode.toString().length > authCodeLength}">{{authCode.toString().length}}/{{authCodeLength}}
+    </span> -->
   </ion-item>
 
   <ion-item *ngIf="payment.name === 'credit-card'">
-    <ion-input #inputCredit4Digi (ionChange)="onCreditCardInfoChange()" type="number" placeholder="末四碼" clearInput>
+    <ion-input [(ngModel)]="card4Digi" (ionChange)="onCreditCardInfoChange()" type="number" placeholder="末四碼"
+      clearInput>
     </ion-input>
-    <span
-      [ngClass]="{error : inputCredit4Digi.value.toString().length > 4}">{{inputCredit4Digi.value.toString().length}}/4</span>
+    <!-- <span [ngClass]="{error : card4Digi.toString().length > 4}">{{card4Digi.toString().length}}/4
+    </span> -->
   </ion-item>
 
 
   <ng-container *ngIf="payment.name=== 'remit'">
     <ion-item style="cursor: pointer;" (click)="onRemitItemClick()">
-      <ion-label>{{remit?.code}} | {{remit?.name}}</ion-label>
+      <ion-label>{{remitInfo?.code}} | {{remitInfo?.name}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-input (ionChange)="onRemitInfoChange()" #inputRemit5Digi maxlength="5" minlength="5" type="number"
-        placeholder="後五碼" clearInput></ion-input>
-      <span
-        [ngClass]="{error : inputRemit5Digi.value.toString().length > 4}">{{inputRemit5Digi.value.toString().length}}/5</span>
+      <ion-input (ionChange)="onRemitInfoChange()" maxlength="5" minlength="5" type="number" placeholder="後五碼"
+        [(ngModel)]="remit5Digi" clearInput></ion-input>
+      <span [ngClass]="{error : remit5Digi.toString().length > 5}">{{remit5Digi.toString().length}}/5</span>
 
     </ion-item>
   </ng-container>
