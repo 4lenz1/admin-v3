@@ -40,7 +40,7 @@ export class PaymentService {
   }
 
 
-  setPayment(payment: Payment) {
+  editPayment(payment: Payment) {
     const newPaymentList = this.paymentList.map((item) => {
       if (item.id === payment.id) {
         const obj = Object.assign({}, item, payment);
@@ -59,7 +59,7 @@ export class PaymentService {
   }
 
   updateTotalPrice(payment: Payment) {
-    this.setPayment(payment);
+    this.editPayment(payment);
     this.setPaidTotalPrice();
 
   }

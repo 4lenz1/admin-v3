@@ -109,7 +109,7 @@ export class PaymentItemComponent implements OnInit, AfterViewInit {
       this.btnNewPaymentDisabled = true;
     }
 
-    this.paymentService.setPayment(this.payment);
+    this.paymentService.editPayment(this.payment);
   }
 
   cash() {
