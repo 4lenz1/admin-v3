@@ -16,7 +16,7 @@ export class PaymentService {
 
   btnConfirmDisabledChanged: EventEmitter<boolean> = new EventEmitter();
   paymentListChanged = new EventEmitter();
-
+  totalPriceChanged: EventEmitter<number> = new EventEmitter();
   getPaymentList() {
     return this.paymentList;
   }
@@ -54,7 +54,7 @@ export class PaymentService {
     console.log(this.paymentList);
   }
 
-  updatePayMethod(){
+  updatePayMethod() {
 
   }
 
@@ -70,6 +70,8 @@ export class PaymentService {
       this.totalPrice += x.payPrice;
     });
     console.log(this.totalPrice);
+
+    this.totalPriceChanged.next(this.totalPrice);
     this.setBtnConfirm();
     this.posService.setPaidMoney(this.totalPrice);
     this.posService.setCanCheckOut();

@@ -2,8 +2,7 @@ import { PaymentService } from './../payment.service';
 import { Payment } from './../payment.model';
 import { ModalController } from '@ionic/angular';
 import { PosService } from './../../pos.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { PaymentRemitComponent } from './payment-remit/payment-remit.component';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 
 @Component({
@@ -14,22 +13,25 @@ import { PaymentRemitComponent } from './payment-remit/payment-remit.component';
 export class PaymentModalComponent implements OnInit {
 
   constructor(private posService: PosService,
-              private modalController: ModalController,
-              private paymentService: PaymentService) { }
+    private modalController: ModalController,
+    private paymentService: PaymentService) { }
 
 
-  totalPrice: number;
+  shouldPay: number;
   isConfirmDisabled = false;
   paymentList: Payment[];
-
+  paidPrice: number;
+  calculatorText = { price: null, color: 'success', text: '剛好' };
   ngOnInit() {
     // get total price first
-    this.totalPrice = this.posService.getTotalPrice();
+    this.shouldPay = this.posService.getTotalPrice();
     // 剛開始是 cash -> true
     this.posService.setPayMethodSelected(true);
 
     this.posService.totalPricechanged.subscribe(result => {
-      this.totalPrice = result;
+      this.shouldPay = result;
+      this.calculator();
+
     });
 
     // init payment list for payment app-payment-item
@@ -43,6 +45,36 @@ export class PaymentModalComponent implements OnInit {
     this.paymentService.btnConfirmDisabledChanged.subscribe(result => {
       this.isConfirmDisabled = result;
     });
+    this.paymentService.totalPriceChanged.subscribe(result => {
+      this.paidPrice = result;
+      this.calculator();
+    });
+  }
+
+
+
+
+
+  calculator() {
+    const result = {
+      price: this.shouldPay - this.paidPrice,
+      text: '',
+      color: ''
+    };
+
+    if (result.price > 0) {
+      result.text = '不足';
+      result.color = 'danger';
+    } else if (result.price === 0) {
+      result.text = '剛好';
+      result.color = 'success';
+    }
+    else {
+      result.text = '找零';
+      result.color = 'warning';
+    }
+    result.price = Math.abs(result.price);
+    this.calculatorText = result;
   }
 
   addNewPayment() {
@@ -61,11 +93,11 @@ export class PaymentModalComponent implements OnInit {
 
 
   onConfirmClick() {
-    console.log('total price : ', this.totalPrice);
+    console.log('total price : ', this.shouldPay);
 
     // when payPrice is enough
     this.modalController.dismiss({
-      paidPrice: this.totalPrice,
+      paidPrice: this.shouldPay,
       // methodName: this.methodName,
       // method: this.payMethod
     });

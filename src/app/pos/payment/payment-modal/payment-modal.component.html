@@ -6,20 +6,29 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <app-payment-item 
-  *ngFor="let payment of paymentList ;
-   let i  = index" [index]="i" [payment]="payment"
-   (newPayment)="addNewPayment()"></app-payment-item>
+  <app-payment-item *ngFor="let payment of paymentList ;
+   let i  = index" [index]="i" [payment]="payment" (newPayment)="addNewPayment()"></app-payment-item>
 
 
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button [disabled]="isConfirmDisabled" (click)="onConfirmClick()" expand="block" color="success">
-      確定
-    </ion-button>
-    <ion-button (click)="onCancelClick()" expand="block" color="primary">
-      取消
-    </ion-button>
+    <ion-row>
+      <ion-col size="12">
+        <ion-title class="ion-text-center" [color]="calculatorText.color">{{ calculatorText.text}} {{calculatorText.price | currency : 'NTD' : '' : '1.0-0'}}</ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="onCancelClick()" expand="block" color="primary">
+          取消
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button [disabled]="isConfirmDisabled" (click)="onConfirmClick()" expand="block" color="success">
+          確定
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>
