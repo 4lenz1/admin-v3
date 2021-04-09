@@ -9,13 +9,13 @@ import { Payment } from './payment.model';
 export class PaymentService {
 
 
-  private paymentList = [new Payment(0, 'cash', this.posService.getTotalPrice(), {})];
+  private paymentList = [new Payment(0, '現金', 'cash', this.posService.getTotalPrice(), {})];
 
   totalPrice;
   constructor(private posService: PosService) { }
 
   btnConfirmDisabledChanged: EventEmitter<boolean> = new EventEmitter();
-  paymentListChanged = new EventEmitter();
+  paymentListChanged: EventEmitter<Payment[]> = new EventEmitter();
   totalPriceChanged: EventEmitter<number> = new EventEmitter();
   getPaymentList() {
     return this.paymentList;
@@ -23,7 +23,8 @@ export class PaymentService {
 
   addPayment(payment: Payment) {
     this.paymentList.push(payment);
-    this.paymentListChanged.next(this.paymentList);
+    this.updatePaymentList();
+
     console.log(this.paymentList);
   }
 
@@ -31,7 +32,7 @@ export class PaymentService {
     this.paymentList = this.paymentList.filter(x =>
       x.id !== id
     );
-    this.paymentListChanged.next(this.paymentList);
+    this.updatePaymentList();
     console.log(this.paymentList);
   }
 
@@ -53,7 +54,11 @@ export class PaymentService {
     // this.paymentListChanged.next(this.paymentList);
     console.log(this.paymentList);
   }
+  updatePaymentList() {
+    console.log('emit update payment list')
+    this.paymentListChanged.emit(this.paymentList);
 
+  }
   updatePayMethod() {
 
   }

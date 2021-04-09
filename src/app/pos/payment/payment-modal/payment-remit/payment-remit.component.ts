@@ -1,5 +1,5 @@
 import { ModalController } from '@ionic/angular';
-import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import {  AfterViewInit, Component, OnInit } from '@angular/core';
 import bankCode from '../../../../../../data/bank-code.json';
 import Fuse from 'fuse.js';
 @Component({

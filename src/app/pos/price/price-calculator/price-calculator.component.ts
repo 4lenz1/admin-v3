@@ -1,3 +1,5 @@
+import { Payment } from './../../payment/payment.model';
+import { PaymentService } from './../../payment/payment.service';
 import { PosService } from './../../pos.service';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -13,10 +15,14 @@ export class PriceCalculatorComponent implements OnInit {
   resultText: string;
   calculatorResult: number;
   color: string;
-  constructor(private posService: PosService) { }
+
+  paymentList: Payment[];
+  constructor(private posService: PosService, private paymentService: PaymentService) { }
 
   ngOnInit() {
     this.moneyShouldPaid = this.posService.getOriginalTotalPrice();
+
+    this.paidMoney = this.posService.getPaidMoney();
     this.posService.paidMoneyChanged.subscribe(result => {
       this.setPaidMoney(result);
       console.log('paid');
@@ -27,6 +33,12 @@ export class PriceCalculatorComponent implements OnInit {
       this.setMoneyShouldPay(price);
       this.setResultText();
 
+    });
+
+    this.paymentList = this.paymentService.getPaymentList();
+    this.paymentService.paymentListChanged.subscribe(result => {
+      this.paymentList = result;
+      console.log(' calculate component :', result);
     });
   }
 

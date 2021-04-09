@@ -114,38 +114,40 @@ export class PaymentItemComponent implements OnInit, AfterViewInit {
       this.cash();
       this.payment.name = 'cash';
       this.btnNewPaymentDisabled = false;
-
+      this.payment.displayName = '現金';
     } else if (value === 'credit-card') {
       this.payment.name = 'credit-card';
       this.authCodeLength = 6;
       this.btnNewPaymentDisabled = false;
-
+      this.payment.displayName = '神奇小卡';
       // this.posService.setPayMethodSelected(false);
     } else if (value === 'line-pay') {
       this.authCodeLength = 5;
       this.btnNewPaymentDisabled = false;
 
       this.payment.name = 'line-pay';
+      this.payment.displayName = 'LINE PAY';
     } else if (value === 'jkos') {
       this.payment.name = 'jkos';
       this.isConfirmDisabled = false;
       this.btnNewPaymentDisabled = false;
-
+      this.payment.displayName = '街口';
     }
     else if (value === 'remit') {
       this.onRemitSelect();
       this.payment.name = 'remit';
       this.btnNewPaymentDisabled = true;
-
+      this.payment.displayName = '匯款';
     } else if (value === 'ruten') {
       this.payment.name = 'ruten';
       this.btnNewPaymentDisabled = true;
-
+      this.payment.displayName = '露天';
       this.isConfirmDisabled = false;
     } else if (value === 'shopee') {
       this.payment.name = 'shopee';
       this.isConfirmDisabled = false;
       this.btnNewPaymentDisabled = true;
+      this.payment.displayName = '蝦皮';
     }
 
     this.paymentService.editPayment(this.payment);

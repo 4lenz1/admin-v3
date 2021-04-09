@@ -170,6 +170,9 @@ export class PosService {
     this.ProdcutsChanged.emit(this.products);
   }
 
+  getPaidMoney(){
+    return this.paidMoney;
+  }
   // checkOut() {
   //   this.httpClient.post('')
   // }

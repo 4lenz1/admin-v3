@@ -5,9 +5,14 @@
     </ion-card-title>
   </ion-card-header>
   <ion-card-header style="padding-top:5px; padding-bottom: 5px;">
-    <ion-card-title class="ion-text-right">
-      ― {{paidMoney | currency : 'NTD' : '' : '1.0-0'}}
-    </ion-card-title>
+    <ng-container *ngFor="let payment of paymentList">
+      <span> {{payment.displayName}}</span>
+      <ion-card-title class="ion-text-right">
+       — {{ payment.payPrice | currency : 'NTD' : '' : '1.0-0'}}
+      </ion-card-title>
+    </ng-container>
+
+
   </ion-card-header>
   <hr class="soild">
   <ion-card-header style="padding-top:5px; padding-bottom: 5px;">
@@ -15,6 +20,4 @@
       {{resultText}} {{ calculatorResult | currency : 'NTD' : '' : '1.0-0' }}
     </ion-card-title>
   </ion-card-header>
-
-  <!-- <p>wqeqweqw</p> -->
 </ion-card>

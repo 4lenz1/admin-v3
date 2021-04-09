@@ -2,7 +2,7 @@ import { PaymentService } from './../payment.service';
 import { Payment } from './../payment.model';
 import { ModalController } from '@ionic/angular';
 import { PosService } from './../../pos.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -18,10 +18,10 @@ export class PaymentModalComponent implements OnInit {
 
 
   shouldPay: number;
-  isConfirmDisabled = false;
+  isConfirmDisabled = true;
   paymentList: Payment[];
   paidPrice: number;
-  calculatorText = { price: null, color: 'success', text: '剛好' };
+  calculatorText = { price: null, color: 'danger', text: 'ＮＯ　＄＄' };
   ngOnInit() {
     // get total price first
     this.shouldPay = this.posService.getTotalPrice();
@@ -65,9 +65,12 @@ export class PaymentModalComponent implements OnInit {
     if (result.price > 0) {
       result.text = '不足';
       result.color = 'danger';
+      this.isConfirmDisabled = true;
+
     } else if (result.price === 0) {
       result.text = '剛好';
       result.color = 'success';
+      this.isConfirmDisabled = false;
     }
     else {
       result.text = '找零';
@@ -75,13 +78,15 @@ export class PaymentModalComponent implements OnInit {
     }
     result.price = Math.abs(result.price);
     this.calculatorText = result;
+    this.isConfirmDisabled = false;
+
   }
 
   addNewPayment() {
     const id = this.paymentList.length;
     console.log('add new payment list id:' + id);
 
-    const payment = new Payment(id, 'cash', 0, {});
+    const payment = new Payment(id, '現金', 'cash', 0, {});
     this.paymentService.addPayment(payment);
   }
 
@@ -93,11 +98,15 @@ export class PaymentModalComponent implements OnInit {
 
 
   onConfirmClick() {
-    console.log('total price : ', this.shouldPay);
+    console.log('confirm clicked ,  total price : ', this.shouldPay);
+
+    // call this function to update paid total price if user not change anything
+    // 如果是選現金，直接按確定沒更改任何選項，要自己再update一次
+    this.paymentService.setPaidTotalPrice();
 
     // when payPrice is enough
     this.modalController.dismiss({
-      paidPrice: this.shouldPay,
+      // paidPrice: this.paidPrice,
       // methodName: this.methodName,
       // method: this.payMethod
     });
