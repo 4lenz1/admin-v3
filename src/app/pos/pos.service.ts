@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Product } from './product.model';
 
 @Injectable({
@@ -42,7 +41,7 @@ export class PosService {
   // private canCheckout = false;
   checkoutValidateChanged = new EventEmitter<boolean>();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor() { }
 
 
   setPaidMoney(value: number) {
