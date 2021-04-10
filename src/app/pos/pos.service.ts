@@ -8,25 +8,7 @@ export class PosService {
 
   // private products: Product;
   private products = [];
-  // = [
-  // new Product(
-  //   '1',
-  //   'Noble Audio Sultan / Limited Edition on Damascus / 24K GOLD / 4.4mm',
-  //   2,
-  //   2000
-  // ),
-  // new Product(
-  //   '2',
-  //   '1000xm4',
-  //   2,
-  //   2000
-  // ), new Product(
-  //   '3'
-  //   , '1000xm4',
-  //   2,
-  //   2000
-  // ),
-  // ];
+
   totalPricechanged = new EventEmitter<number>();
   ProdcutsChanged = new EventEmitter<Product[]>();
   paidMoneyChanged = new EventEmitter<number>();
@@ -156,24 +138,8 @@ export class PosService {
     this.ProdcutsChanged.emit(this.products);
   }
 
-  // get product info by barcode
-  getProductByBarCode(value: string) {
-    //   for test now
-    this.products.unshift(new Product(
-      (Math.random() * +value).toFixed(0).toString(),
-      'TEST Product',
-      1,
-      3000
-    ));
-    this.setTotalPrice(this.getOriginalTotalPrice());
-    // this.totalPricechanged.emit();
-    this.ProdcutsChanged.emit(this.products);
-  }
-
   getPaidMoney() {
     return this.paidMoney;
   }
-  // checkOut() {
-  //   this.httpClient.post('')
-  // }
+
 }
