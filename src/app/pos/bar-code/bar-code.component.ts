@@ -3,7 +3,7 @@ import { ProductService } from './../../product.service';
 import { PosService } from './../pos.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeFormat } from '@zxing/library';
-import { IonInput, AlertController, ModalController } from '@ionic/angular';
+import { IonInput, AlertController, ModalController, LoadingController } from '@ionic/angular';
 import { ProductSelectModalComponent } from 'src/app/shared/UI/product-select-modal/product-select-modal.component';
 import { CamScannerModalComponent } from '../UI/cam-scanner-modal/cam-scanner-modal.component';
 
@@ -22,9 +22,10 @@ export class BarCodeComponent implements OnInit {
   @ViewChild('inputBarcode') inputBarcodeEl: IonInput;
 
   constructor(private posService: PosService
-    ,         private productService: ProductService
-    ,         private alertController: AlertController
-    ,         private modalController: ModalController) { }
+    , private productService: ProductService
+    , private alertController: AlertController
+    , private modalController: ModalController
+    , private loadingController: LoadingController) { }
 
   ngOnInit() { }
   async onCamScanning() {
@@ -44,13 +45,42 @@ export class BarCodeComponent implements OnInit {
       // cssClass: 'my-custom-class'
     });
 
+    const loading = await this.loadingController.create({
+      message: '等等ㄛ'
+    });
+
+
+
     modal.onWillDismiss().then(result => {
       const data = result.data;
       console.log(result.data);
       if (data) {
+
+        // show loading popup
+        loading.present();
         console.log('scan data :' + data);
 
-        this.posService.getProductByBarCode('1000');
+        // call api
+
+        this.productService.getProductByCode(data)
+          .subscribe((resultData) => {
+            const product = resultData[0];
+
+            if (product) {
+              this.posService.addProduct(
+                new Product(product.Id,
+                  product.Name,
+                  1,
+                  product.SalePrice));
+            } else {
+              // product not found
+              this.showNotFoundAlert();
+            }
+
+            loading.dismiss();
+          });
+
+
         this.camIconColor = (this.camIconColor === 'warning') ? 'success' : 'warning';
 
         // this.posService.setTaxSelected(true);
@@ -90,12 +120,19 @@ export class BarCodeComponent implements OnInit {
 
   }
 
-  scanByCode(value: string) {
+  async scanByCode(value: string) {
     // 4548736089655
     console.log(value);
     if (value.length === 0) {
       return 0;
     }
+    // show loading popup
+    const loading = await this.loadingController.create({
+      message: '等等ㄛ'
+    });
+    await loading.present();
+
+    // call api
     this.productService.getProductByCode(value)
       .subscribe(result => {
         const product = result[0];
@@ -112,6 +149,7 @@ export class BarCodeComponent implements OnInit {
           this.showNotFoundAlert();
         }
 
+        loading.dismiss();
         this.inputBarcodeEl.value = '';
       });
   }
