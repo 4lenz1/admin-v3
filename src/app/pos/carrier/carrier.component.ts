@@ -39,7 +39,6 @@ export class CarrierComponent implements OnInit {
     const popover = await this.popoverController.create({
       component: PopoverListComponent,
       componentProps: { items: this.carrierItems, title: '發票形式' },
-      cssClass: 'my-custom-class',
       event: ev,
       translucent: true
     });
@@ -52,7 +51,7 @@ export class CarrierComponent implements OnInit {
           return;
         }
         else if (result.data.id === 'recipe') {
-          this.color = 'success';
+          this.color = 'primary';
           this.type = '紙本發票';
           this.icon = 'document-outline';
         } else {
