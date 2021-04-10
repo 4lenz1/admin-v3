@@ -8,25 +8,26 @@ import { Product } from './product.model';
 export class PosService {
 
   // private products: Product;
-  private products = [
-    new Product(
-      '1',
-      'Noble Audio Sultan / Limited Edition on Damascus / 24K GOLD / 4.4mm',
-      2,
-      2000
-    ),
-    new Product(
-      '2',
-      '1000xm4',
-      2,
-      2000
-    ), new Product(
-      '3'
-      , '1000xm4',
-      2,
-      2000
-    ),
-  ];
+  private products = [];
+  // = [
+  // new Product(
+  //   '1',
+  //   'Noble Audio Sultan / Limited Edition on Damascus / 24K GOLD / 4.4mm',
+  //   2,
+  //   2000
+  // ),
+  // new Product(
+  //   '2',
+  //   '1000xm4',
+  //   2,
+  //   2000
+  // ), new Product(
+  //   '3'
+  //   , '1000xm4',
+  //   2,
+  //   2000
+  // ),
+  // ];
   totalPricechanged = new EventEmitter<number>();
   ProdcutsChanged = new EventEmitter<Product[]>();
   paidMoneyChanged = new EventEmitter<number>();
@@ -87,7 +88,7 @@ export class PosService {
   }
 
   // ONLY use in payment modal
-  getTotalPrice(){
+  getTotalPrice() {
     return this.totalPrice;
   }
   resetTotalPrice() {
@@ -170,7 +171,7 @@ export class PosService {
     this.ProdcutsChanged.emit(this.products);
   }
 
-  getPaidMoney(){
+  getPaidMoney() {
     return this.paidMoney;
   }
   // checkOut() {
